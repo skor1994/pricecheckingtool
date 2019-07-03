@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace pricecheckingtool
 {
@@ -23,6 +24,12 @@ namespace pricecheckingtool
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            User user = new User(sessionID.Text, accName.Text);
+            MessageBox.Show($"Willkommen {user.accName}");
         }
     }
 }

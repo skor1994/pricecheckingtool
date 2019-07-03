@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pricecheckingtool"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
-        
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                <GradientStop Color="#FF2F2FA5" Offset="0.902"/>
+                <GradientStop Color="White"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <TextBox x:Name="accName" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
+        <TextBox x:Name="sessionID" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="347,298,346.333,247.667"></TextBox>
+        <Button Click="Login_Click" Height="25" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center">Login</Button>
     </Grid>
 </Window>
