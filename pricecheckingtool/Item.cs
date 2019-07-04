@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace pricecheckingtool
+{
+    enum ItemRarity { normal, magic, rare, unique };
+    enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Rings, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver, Flask };
+
+    abstract class Item
+    {
+        public string name { get; }
+        public ItemRarity itemRarity { get; }
+        public ItemBaseType itemBaseType { get; }
+        public bool isIdentified { get; }
+        public string[6] mods { get; }
+        
+        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, bool isIdentified)
+        {
+            this.name = name;
+            this.itemRarity = itemRarity;
+            this.itemBaseType = itemBaseType;
+            this.isIdentified = isIdentified;
+        }
+
+    }
+}
