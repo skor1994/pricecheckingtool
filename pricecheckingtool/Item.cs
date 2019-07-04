@@ -8,23 +8,32 @@ namespace pricecheckingtool
 {
     enum ItemRarity { normal, magic, rare, unique };
     enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Rings, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver, Flask };
+    enum ItemBase { shaper, elder, normal };
 
     abstract class Item
     {
         public string name { get; }
         public ItemRarity itemRarity { get; }
         public ItemBaseType itemBaseType { get; }
+        public ItemBase itemBase { get; }
         public bool isIdentified { get; }
         public string[] mods { get; }
-        
-        // any properties missing?
+        public int itemlevel { get; }
+        public Dictionary<string, int> socketsAndColors;
+        public int links { get; }
 
-        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, bool isIdentified, string[] mods)
+        // any property missing?
+
+        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType,ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<string, int> socketsAndColors, int links, string[] mods)
         {
             this.name = name;
             this.itemRarity = itemRarity;
             this.itemBaseType = itemBaseType;
+            this.itemBase = itemBase;
             this.isIdentified = isIdentified;
+            this.itemlevel = itemlevel;
+            this.socketsAndColors = socketsAndColors;
+            this.links = links;
             this.mods = mods;
         }
 

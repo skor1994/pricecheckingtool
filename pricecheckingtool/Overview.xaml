@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Overview" Height="600" Width="800">
     <Grid>
-        <ListView x:Name="tabs" Background="#FFA4A39E" Height="auto" Width="200" HorizontalAlignment="Left" />
-        <ListView x:Name="items" Height="auto" Width="400" HorizontalAlignment="Right" Margin="100" Background="#FFDCCB77"/>
+        <ListView x:Name="tabs" Background="#FFFDFDFD" Height="auto" Width="200" HorizontalAlignment="Left" />
+        <ListView x:Name="items" Height="auto" Width="400" HorizontalAlignment="Right" Margin="100" Background="#FFFDFDFD"/>
         <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,100,25">Refresh</Button>
         <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,375,25">Check on PoE-Trade</Button>
     </Grid>
