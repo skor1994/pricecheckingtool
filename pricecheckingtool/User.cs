@@ -23,7 +23,7 @@ namespace pricecheckingtool
         private void WriteToFile()
         {
         
-            string path = @"C:\Users\Philipp\Documents\pricecheckingtool\pricecheckingtool\user.txt";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
 
             if (!File.Exists(path))
             {
