@@ -31,5 +31,10 @@ namespace pricecheckingtool
             User user = new User(sessionID.Text, accName.Text);
             MessageBox.Show($"Willkommen {user.accName}");
         }
+
+        private void fetchItems()
+        {
+
+        }
     }
 }
