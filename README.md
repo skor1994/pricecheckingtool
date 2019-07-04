@@ -1,5 +1,5 @@
 # Price-Checking-Tool
-A simple price checking tool for path of exile. It checks your inventory for valuable Items and displays its price.
+A simple price checking tool for path of exile.
 
 ## Story
 We often play in a group and just putting all loot into our stashtabs without looking at it. It often appears, that we delete or sell items to the vendor because we are lazy as fuck and dont want to check all of them on PoE-Trade or with specific macros.
