@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace pricecheckingtool
 {
-    class TwoHandedWeapon
+    enum TwoHandedWeaponBaseTypes { Bows, Staves, Swords, Axes, Maces}
+
+    class TwoHandedWeapon : Item
     {
+        // test
+        public TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes { get; }
+
+        public TwoHandedWeapon(TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) : 
+            base(name, itemRarity, ItemBaseType.TwoHandedWeapon, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods)
+        {
+            this.twoHandedWeaponBaseTypes = twoHandedWeaponBaseTypes;
+        }
     }
 }
