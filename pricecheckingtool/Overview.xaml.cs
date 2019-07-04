@@ -41,7 +41,6 @@ namespace pricecheckingtool
                 items.Add(new Ring("testring", ItemRarity.rare, ItemBase.shaper, false, 81,null, null));
             }
 
-
             foreach(Item item in items)
             {
                 this.listViewItems.Items.Add(item);
