@@ -9,8 +9,8 @@ namespace pricecheckingtool
 {
     class User
     {
-        public string sessionID { get; set; }
-        public string accName { get; set; }
+        public string sessionID { get; }
+        public string accName { get; }
 
         public User(string sessionID, string accName)
         {
@@ -29,6 +29,14 @@ namespace pricecheckingtool
             {
                 File.Create(path).Dispose();
 
+                using (TextWriter tw = new StreamWriter(path))
+                {
+                    tw.WriteLine($"sessionID: {sessionID}, accName: {accName}");
+                    tw.Close();
+                }
+            }
+            else
+            {
                 using (TextWriter tw = new StreamWriter(path))
                 {
                     tw.WriteLine($"sessionID: {sessionID}, accName: {accName}");
