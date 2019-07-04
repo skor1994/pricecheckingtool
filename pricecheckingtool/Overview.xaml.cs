@@ -22,6 +22,27 @@ namespace pricecheckingtool
         public Overview()
         {
             InitializeComponent();
+
+            // testing the listView for Tabs
+
+            for(int i = 0; i < 50; i++)
+            {
+                this.listViewTabs.Items.Add(i);
+            }
+
+            // testing the listView for Items
+            List<object> items = new List<object>();
+
+            for (int i = 0; i < 15; i++)
+            {
+                items.Add(new Amulet("testamulet", ItemRarity.rare, ItemBase.shaper, false, 81, null));
+            }
+
+            foreach(Amulet amulet in items)
+            {
+                this.listViewItems.Items.Add(amulet);
+            }
+
         }
     }
 }

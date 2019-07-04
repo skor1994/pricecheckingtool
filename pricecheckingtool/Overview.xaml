@@ -7,8 +7,23 @@
         mc:Ignorable="d"
         Title="Overview" Height="600" Width="800">
     <Grid>
-        <ListView x:Name="tabs" Background="#FFFDFDFD" Height="auto" Width="200" HorizontalAlignment="Left" />
-        <ListView x:Name="items" Height="auto" Width="400" HorizontalAlignment="Right" Margin="100" Background="#FFFDFDFD"/>
+        <ListView x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="200" HorizontalAlignment="Left" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="TabID" Width="200" DisplayMemberBinding="{Binding}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="listViewItems" Height="auto" Width="400" HorizontalAlignment="Right" Margin="100" Background="#FFFDFDFD">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ItemName" Width="100" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemBaseType}"/>
+                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemRarity}"/>
+                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemBase}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,100,25">Refresh</Button>
         <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,375,25">Check on PoE-Trade</Button>
     </Grid>
