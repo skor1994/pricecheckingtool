@@ -31,16 +31,20 @@ namespace pricecheckingtool
             }
 
             // testing the listView for Items
-            List<object> items = new List<object>();
+            List<Item> items = new List<Item>();
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 3; i++)
             {
                 items.Add(new Amulet("testamulet", ItemRarity.rare, ItemBase.shaper, false, 81, null));
+                items.Add(new Amulet("ring", ItemRarity.normal, ItemBase.normal, false, 81, null));
+                items.Add(new Amulet("mark of", ItemRarity.unique, ItemBase.elder, false, 81, null));
+                items.Add(new Ring("testring", ItemRarity.rare, ItemBase.shaper, false, 81,null, null));
             }
 
-            foreach(Amulet amulet in items)
+
+            foreach(Item item in items)
             {
-                this.listViewItems.Items.Add(amulet);
+                this.listViewItems.Items.Add(item);
             }
 
         }
