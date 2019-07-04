@@ -19,7 +19,7 @@ namespace pricecheckingtool
         public bool isIdentified { get; }
         public string[] mods { get; }
         public int itemlevel { get; }
-        public Dictionary<char, int> socketsAndColors;
+        public Dictionary<char, int> socketsAndColors = new Dictionary<char, int>();
         public int links { get; }
 
         // any property missing?
