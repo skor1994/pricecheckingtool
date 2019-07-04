@@ -82,7 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\OneHandedWeapon.cs" />
+    <Compile Include="Models\Quiver.cs" />
     <Compile Include="Models\Ring.cs" />
+    <Compile Include="Models\Shield.cs" />
     <Compile Include="Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
