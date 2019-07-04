@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace pricecheckingtool
 {
-    class Jewel
+    enum JewelBaseTypes { Crimson, Viridian, Cobalt, Prismatic, Murderous, Searching, Hypnotic, Ghastly };
+
+    class Jewel : Item
     {
+        public JewelBaseTypes jewelBaseTypes { get; }
+
+        public Jewel(JewelBaseTypes jewelBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods) : 
+            base(name, itemRarity, ItemBaseType.Rings, itemBase, isIdentified, itemlevel, null, 0, mods)
+        {
+            this.jewelBaseTypes = jewelBaseTypes;
+        }
     }
 }

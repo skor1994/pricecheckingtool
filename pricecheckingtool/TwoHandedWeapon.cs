@@ -10,7 +10,6 @@ namespace pricecheckingtool
 
     class TwoHandedWeapon : Item
     {
-        // test
         public TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes { get; }
 
         public TwoHandedWeapon(TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) : 

@@ -63,7 +63,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Gloves.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Jewel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -74,9 +76,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OneHandedWeapon.cs" />
     <Compile Include="Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TwoHandedWeapon.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
