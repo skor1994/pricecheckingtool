@@ -19,12 +19,12 @@ namespace pricecheckingtool
         public bool isIdentified { get; }
         public string[] mods { get; }
         public int itemlevel { get; }
-        public Dictionary<string, int> socketsAndColors;
+        public Dictionary<char, int> socketsAndColors;
         public int links { get; }
 
         // any property missing?
 
-        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType,ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<string, int> socketsAndColors, int links, string[] mods)
+        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods)
         {
             this.name = name;
             this.itemRarity = itemRarity;
