@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace pricecheckingtool
 {
     enum ItemRarity { normal, magic, rare, unique };
-    enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Rings, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver, Flask };
+    enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Ring, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver };
     enum ItemBase { shaper, elder, normal };
 
     abstract class Item
@@ -21,8 +21,6 @@ namespace pricecheckingtool
         public int itemlevel { get; }
         public Dictionary<char, int> socketsAndColors { get; }
         public int links { get; }
-
-        // any property missing?
 
         public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods)
         {
