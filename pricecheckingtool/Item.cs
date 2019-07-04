@@ -15,14 +15,17 @@ namespace pricecheckingtool
         public ItemRarity itemRarity { get; }
         public ItemBaseType itemBaseType { get; }
         public bool isIdentified { get; }
-        public string[6] mods { get; }
+        public string[] mods { get; }
         
-        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, bool isIdentified)
+        // any properties missing?
+
+        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, bool isIdentified, string[] mods)
         {
             this.name = name;
             this.itemRarity = itemRarity;
             this.itemBaseType = itemBaseType;
             this.isIdentified = isIdentified;
+            this.mods = mods;
         }
 
     }

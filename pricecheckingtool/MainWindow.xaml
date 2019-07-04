@@ -13,8 +13,8 @@
                 <GradientStop Color="White"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="accName" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBox>
-        <TextBox x:Name="sessionID" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="347,298,346.333,247.667"></TextBox>
-        <Button Click="Login_Click" Height="25" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center">Login</Button>
+        <TextBox x:Name="accName" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Text="AccountName"></TextBox>
+        <TextBox x:Name="sessionID" Height="25" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Text="SessionID" Margin="346,297,346,247"></TextBox>
+        <Button Click="Login_Click" Height="25" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="346,0,346,204">Login</Button>
     </Grid>
 </Window>

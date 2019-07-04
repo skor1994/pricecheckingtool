@@ -10,31 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Diagnostics;
 
 namespace pricecheckingtool
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für Overview.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Overview : Window
     {
-        public MainWindow()
+        public Overview()
         {
             InitializeComponent();
         }
-
-        private void Login_Click(object sender, RoutedEventArgs e)
-        {
-            User user = new User(sessionID.Text, accName.Text);
-
-            Overview win = new Overview();
-            win.Show();
-            this.Close();
-
-        }
-
     }
 }
