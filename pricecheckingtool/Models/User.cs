@@ -22,7 +22,6 @@ namespace pricecheckingtool
 
         private void WriteToFile()
         {
-        
             string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
 
             if (!File.Exists(path))
@@ -31,15 +30,8 @@ namespace pricecheckingtool
 
                 using (TextWriter tw = new StreamWriter(path))
                 {
-                    tw.WriteLine($"sessionID: {sessionID}, accName: {accName}");
-                    tw.Close();
-                }
-            }
-            else
-            {
-                using (TextWriter tw = new StreamWriter(path))
-                {
-                    tw.WriteLine($"sessionID: {sessionID}, accName: {accName}");
+                    tw.WriteLine($"sessionID:{sessionID}");
+                    tw.WriteLine($"accName:{accName}");
                     tw.Close();
                 }
             }
