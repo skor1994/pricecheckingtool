@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -55,29 +56,45 @@ namespace pricecheckingtool
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // link to www.pathofexile.com/character-window/get-stash-items/?league={}&accountName={}&tabIndex={}&tabs={}
+            List<string> userData = UserData();
+            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={userData.ElementAt(1)}&tabIndex=1&tabs=1";
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
             request.Method = "Get";
             request.KeepAlive = true;
             request.ContentType = "appication/json";
             request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(CreateCookie());
+            request.CookieContainer.Add(CreateCookie(userData.ElementAt(0)));
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string myResponse = "";
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(response.GetResponseStream()))
+            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
             {
                 myResponse = sr.ReadToEnd();
-                Debug.Print(myResponse);
             }
             response.Close();
         }
 
-        private Cookie CreateCookie()
+        private List<string> UserData()
+        {
+            StreamReader reader = File.OpenText(AppDomain.CurrentDomain.BaseDirectory + "user.txt");
+            string line = string.Empty;
+            List<string> userData = new List<string>();
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Contains("sessionID"))
+                    userData.Add(line.Remove(0, 10));
+                else if (line.Contains("accName"))
+                    userData.Add(line.Remove(0, 8));
+            }
+            return userData;
+        }
+
+        private Cookie CreateCookie(string sessionID)
         {
             Cookie cookie = new Cookie();
-            cookie.Value = ""; // value = sessionid
+            cookie.Value = sessionID;
             cookie.Name = "POESESSID";
             cookie.Domain = "pathofexile.com";
             cookie.Secure = false;
