@@ -24,10 +24,15 @@ namespace pricecheckingtool
             InitializeComponent();
 
             // testing the listView for Tabs
+            List<StashTab> stashTabs = new List<StashTab>();
 
-            for(int i = 0; i < 25; i++)
+            stashTabs.Add(new QuadTab("Dump"));
+            stashTabs.Add(new PremiumTab("Rings"));
+            stashTabs.Add(new NormalTab("2"));
+
+            foreach (StashTab stashTab in stashTabs)
             {
-                this.listViewTabs.Items.Add(i);
+                this.listViewTabs.Items.Add(stashTab);
             }
 
             // testing the listView for Items

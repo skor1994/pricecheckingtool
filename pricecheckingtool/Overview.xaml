@@ -10,7 +10,8 @@
         <ListView x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="200" HorizontalAlignment="Left" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="TabID" Width="200" DisplayMemberBinding="{Binding}"/>
+                    <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding stashTabTypes}"/>
                 </GridView>
             </ListView.View>
         </ListView>
