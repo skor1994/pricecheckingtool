@@ -12,8 +12,8 @@ namespace pricecheckingtool
     {
         public JewelBaseTypes jewelBaseTypes { get; }
 
-        public Jewel(JewelBaseTypes jewelBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods) : 
-            base(name, itemRarity, ItemBaseType.Jewel, itemBase, isIdentified, itemlevel, null, 0, mods)
+        public Jewel(JewelBaseTypes jewelBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods, string value) : 
+            base(name, itemRarity, ItemBaseType.Jewel, itemBase, isIdentified, itemlevel, null, 0, mods, value)
         {
             this.jewelBaseTypes = jewelBaseTypes;
         }

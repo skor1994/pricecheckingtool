@@ -12,8 +12,8 @@ namespace pricecheckingtool
     {
         public BootsBaseTypes bootsBaseTypes { get; }
 
-        public Boots(BootsBaseTypes bootsBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) :
-            base(name, itemRarity, ItemBaseType.Boots, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods)
+        public Boots(BootsBaseTypes bootsBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value) :
+            base(name, itemRarity, ItemBaseType.Boots, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods, value)
         {
             this.bootsBaseTypes = bootsBaseTypes;
         }

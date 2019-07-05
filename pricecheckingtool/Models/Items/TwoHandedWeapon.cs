@@ -12,8 +12,8 @@ namespace pricecheckingtool
     {
         public TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes { get; }
 
-        public TwoHandedWeapon(TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) : 
-            base(name, itemRarity, ItemBaseType.TwoHandedWeapon, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods)
+        public TwoHandedWeapon(TwoHandedWeaponBaseTypes twoHandedWeaponBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value) : 
+            base(name, itemRarity, ItemBaseType.TwoHandedWeapon, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods, value)
         {
             this.twoHandedWeaponBaseTypes = twoHandedWeaponBaseTypes;
         }

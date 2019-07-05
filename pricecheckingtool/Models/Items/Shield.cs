@@ -12,8 +12,8 @@ namespace pricecheckingtool
     {
         public ShieldBaseTypes shieldBaseTypes { get; }
 
-        public Shield(ShieldBaseTypes shieldBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) :
-            base(name, itemRarity, ItemBaseType.Shield, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods)
+        public Shield(ShieldBaseTypes shieldBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value) :
+            base(name, itemRarity, ItemBaseType.Shield, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods, value)
         {
             this.shieldBaseTypes = shieldBaseTypes;
         }

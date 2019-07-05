@@ -12,8 +12,8 @@ namespace pricecheckingtool
     {
         public BodyArmourBaseTypes bodyArmourBaseTypes { get; }
 
-        public BodyArmour(BodyArmourBaseTypes bodyArmourBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods) :
-            base(name, itemRarity, ItemBaseType.BodyArmour, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods)
+        public BodyArmour(BodyArmourBaseTypes bodyArmourBaseTypes, string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value) :
+            base(name, itemRarity, ItemBaseType.BodyArmour, itemBase, isIdentified, itemlevel, socketsAndColors, links, mods, value)
         {
             this.bodyArmourBaseTypes = bodyArmourBaseTypes;
         }

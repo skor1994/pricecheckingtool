@@ -8,8 +8,8 @@ namespace pricecheckingtool
 {
     class Quiver : Item
     {
-        public Quiver(string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods) :
-            base(name, itemRarity, ItemBaseType.Quiver, itemBase, isIdentified, itemlevel, null, 0, mods)
+        public Quiver(string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods, string value) :
+            base(name, itemRarity, ItemBaseType.Quiver, itemBase, isIdentified, itemlevel, null, 0, mods, value)
         {
 
         }

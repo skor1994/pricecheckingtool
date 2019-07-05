@@ -21,8 +21,9 @@ namespace pricecheckingtool
         public int itemlevel { get; }
         public Dictionary<char, int> socketsAndColors { get; }
         public int links { get; }
+        public string value { get; }
 
-        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods)
+        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value)
         {
             this.name = name;
             this.itemRarity = itemRarity;
@@ -33,6 +34,7 @@ namespace pricecheckingtool
             this.socketsAndColors = socketsAndColors;
             this.links = links;
             this.mods = mods;
+            this.value = value;
         }
 
     }

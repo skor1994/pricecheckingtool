@@ -9,8 +9,8 @@ namespace pricecheckingtool
 {
     class Amulet : Item
     {
-        public Amulet(string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods) :
-            base(name, itemRarity, ItemBaseType.Amulet, itemBase, isIdentified, itemlevel, null, 0, mods)
+        public Amulet(string name, ItemRarity itemRarity, ItemBase itemBase, bool isIdentified, int itemlevel, string[] mods, string value) :
+            base(name, itemRarity, ItemBaseType.Amulet, itemBase, isIdentified, itemlevel, null, 0, mods, value)
         {
 
         }
