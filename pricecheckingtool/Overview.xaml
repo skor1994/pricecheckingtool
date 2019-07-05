@@ -20,7 +20,7 @@
                     <GridViewColumn Header="ItemName" Width="100" DisplayMemberBinding="{Binding name}"/>
                     <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemBaseType}"/>
                     <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemRarity}"/>
-                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding value}"/>
+                    <GridViewColumn Header="ItemValue" Width="100" DisplayMemberBinding="{Binding value}"/>
                 </GridView>
             </ListView.View>
         </ListView>

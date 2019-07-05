@@ -25,7 +25,7 @@ namespace pricecheckingtool
 
             // testing the listView for Tabs
 
-            for(int i = 0; i < 50; i++)
+            for(int i = 0; i < 25; i++)
             {
                 this.listViewTabs.Items.Add(i);
             }
