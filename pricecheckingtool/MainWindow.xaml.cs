@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.IO;
 
 namespace pricecheckingtool
 {
@@ -24,16 +25,32 @@ namespace pricecheckingtool
         public MainWindow()
         {
             InitializeComponent();
+            SkipToOverview();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             User user = new User(sessionID.Text, accName.Text);
+        }
+        
+        private bool IsLoggedIn()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
 
-            Overview win = new Overview();
-            win.Show();
-            this.Close();
+            if (File.Exists(path))
+                return true;
+            else
+                return false;
+        }
 
+        private void SkipToOverview()
+        {
+            if (IsLoggedIn())
+            {
+                Overview win = new Overview();
+                win.Show();
+                this.Close();
+            }
         }
 
     }
