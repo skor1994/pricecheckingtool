@@ -31,6 +31,10 @@ namespace pricecheckingtool
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             User user = new User(sessionID.Text, accName.Text);
+
+            Overview win = new Overview();
+            win.Show();
+            this.Close();
         }
         
         private bool IsLoggedIn()

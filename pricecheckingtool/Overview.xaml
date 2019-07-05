@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Overview" Height="600" Width="800">
     <Grid>
-        <ListView MouseLeftButtonUp="ListViewTabs_MouseLeftButtonUp" x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="200" HorizontalAlignment="Left" >
+        <ListView MouseLeftButtonUp="ListViewTabs_MouseLeftButtonUp" x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="220" HorizontalAlignment="Left" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding stashTabTypes}"/>
+                    <GridViewColumn Header="StashTabType" Width="120" DisplayMemberBinding="{Binding type}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
@@ -32,74 +33,24 @@ namespace pricecheckingtool
 
         private void InitializeStashTabView()
         {
-            List<StashTab> stashTabs = new List<StashTab>();
-            List<Item> items = new List<Item>();
-            List<Item> items2 = new List<Item>();
-            List<Item> items3 = new List<Item>();
+            
+            user.GetUserStashTabs();
 
-            items.Add(new Amulet("testamulet", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
-            items.Add(new Amulet("ring", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
-
-            items2.Add(new Amulet("testamulet2", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
-            items2.Add(new Amulet("ring2", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
-
-            items3.Add(new Amulet("testamulet3", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
-            items3.Add(new Amulet("ring3", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
-
-            stashTabs.Add(new QuadTab("Dump", items));
-            stashTabs.Add(new PremiumTab("Rings", items2));
-            stashTabs.Add(new NormalTab("2", items3));
-
-            foreach (StashTab stashTab in stashTabs)
+            foreach (StashTab stashTab in user.stashTabs)
             {
-                this.listViewTabs.Items.Add(stashTab);
+                listViewTabs.Items.Add(stashTab);
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string data = GetUserStash();
-            Debug.Print(data);
-        }
-
-        private string GetUserStash()
-        {
-            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user.accName}&tabIndex=1&tabs=1";
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
-            request.Method = "Get";
-            request.KeepAlive = true;
-            request.ContentType = "appication/json";
-            request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(CreateCookie(user.sessionID));
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string myResponse = "";
-            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-            {
-                myResponse = sr.ReadToEnd();
-            }
-            response.Close();
-
-            return myResponse;
-        }
-
-        private Cookie CreateCookie(string sessionID)
-        {
-            Cookie cookie = new Cookie();
-            cookie.Value = sessionID;
-            cookie.Name = "POESESSID";
-            cookie.Domain = "pathofexile.com";
-            cookie.Secure = false;
-            cookie.Path = "/";
-            cookie.HttpOnly = false;
-
-            return cookie;
+            listViewTabs.Items.Clear();
+            InitializeStashTabView();
         }
 
         private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.listViewItems.Items.Clear();
+            listViewItems.Items.Clear();
 
             var stashTab = (StashTab)(sender as ListView).SelectedItem;
 

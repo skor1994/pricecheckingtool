@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -85,15 +86,7 @@
     <Compile Include="Models\Items\Quiver.cs" />
     <Compile Include="Models\Items\Ring.cs" />
     <Compile Include="Models\Items\Shield.cs" />
-    <Compile Include="Models\Stashes\DivinationTab.cs" />
-    <Compile Include="Models\Stashes\EssenceTab.cs" />
-    <Compile Include="Models\Stashes\Fragment.cs" />
-    <Compile Include="Models\Stashes\MapTab.cs" />
-    <Compile Include="Models\Stashes\NormalTab.cs" />
-    <Compile Include="Models\Stashes\PremiumTab.cs" />
-    <Compile Include="Models\Stashes\QuadTab.cs" />
-    <Compile Include="Models\Stashes\StashTab.cs" />
-    <Compile Include="Models\Stashes\UniqueTab.cs" />
+    <Compile Include="Models\StashTab.cs" />
     <Compile Include="Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
