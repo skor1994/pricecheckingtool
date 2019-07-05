@@ -22,6 +22,8 @@ namespace pricecheckingtool
     /// </summary>
     public partial class Overview : Window
     {
+        static User user = new User();
+
         public Overview()
         {
             InitializeComponent();
@@ -56,15 +58,20 @@ namespace pricecheckingtool
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<string> userData = UserData();
-            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={userData.ElementAt(1)}&tabIndex=1&tabs=1";
+            string data = GetUserStash();
+            Debug.Print(data);
+        }
+
+        private string GetUserStash()
+        {
+            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user.accName}&tabIndex=1&tabs=1";
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
             request.Method = "Get";
             request.KeepAlive = true;
             request.ContentType = "appication/json";
             request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(CreateCookie(userData.ElementAt(0)));
+            request.CookieContainer.Add(CreateCookie(user.sessionID));
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string myResponse = "";
@@ -73,22 +80,8 @@ namespace pricecheckingtool
                 myResponse = sr.ReadToEnd();
             }
             response.Close();
-        }
 
-        private List<string> UserData()
-        {
-            StreamReader reader = File.OpenText(AppDomain.CurrentDomain.BaseDirectory + "user.txt");
-            string line = string.Empty;
-            List<string> userData = new List<string>();
-
-            while ((line = reader.ReadLine()) != null)
-            {
-                if (line.Contains("sessionID"))
-                    userData.Add(line.Remove(0, 10));
-                else if (line.Contains("accName"))
-                    userData.Add(line.Remove(0, 8));
-            }
-            return userData;
+            return myResponse;
         }
 
         private Cookie CreateCookie(string sessionID)
