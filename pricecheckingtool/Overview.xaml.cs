@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -51,6 +53,37 @@ namespace pricecheckingtool
                 this.listViewItems.Items.Add(item);
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // value = sessionid
+
+            Cookie cookie = new Cookie();
+            cookie.Value = "";
+            cookie.Name = "POESESSID";
+            cookie.Domain = "pathofexile.com";
+            cookie.Secure = false;
+            cookie.Path = "/";
+            cookie.HttpOnly = false;
+
+            // link to www.pathofexile.com/character-window/get-stash-items/?league={}&accountName={}&tabIndex={}&tabs={}
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("");
+            request.Method = "Get";
+            request.KeepAlive = true;
+            request.ContentType = "appication/json";
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(cookie);
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            string myResponse = "";
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(response.GetResponseStream()))
+            {
+                myResponse = sr.ReadToEnd();
+                Debug.Print(myResponse);
+            }
+            response.Close();
         }
     }
 }

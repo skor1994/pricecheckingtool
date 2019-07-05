@@ -25,7 +25,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,100,25">Refresh</Button>
-        <Button VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,375,25">Check on PoE-Trade</Button>
+        <Button Click="Button_Click" VerticalAlignment="Bottom" Height="Auto" Width="125" HorizontalAlignment="Right" Margin="0,0,100,25">Refresh</Button>
     </Grid>
 </Window>
