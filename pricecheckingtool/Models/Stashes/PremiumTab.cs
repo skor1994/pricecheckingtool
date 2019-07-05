@@ -8,7 +8,7 @@ namespace pricecheckingtool
 {
     class PremiumTab : StashTab
     {
-        public PremiumTab(string name) : base(name, 144, StashTabTypes.Premium)
+        public PremiumTab(string name, List<Item> items) : base(name, 144, StashTabTypes.Premium, items)
         {
 
         }

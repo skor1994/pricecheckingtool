@@ -24,49 +24,37 @@ namespace pricecheckingtool
         public Overview()
         {
             InitializeComponent();
+            InitializeStashTabView();
+        }
 
-            // testing the listView for Tabs
+        private void InitializeStashTabView()
+        {
             List<StashTab> stashTabs = new List<StashTab>();
+            List<Item> items = new List<Item>();
+            List<Item> items2 = new List<Item>();
+            List<Item> items3 = new List<Item>();
 
-            stashTabs.Add(new QuadTab("Dump"));
-            stashTabs.Add(new PremiumTab("Rings"));
-            stashTabs.Add(new NormalTab("2"));
+            items.Add(new Amulet("testamulet", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
+            items.Add(new Amulet("ring", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
+
+            items2.Add(new Amulet("testamulet2", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
+            items2.Add(new Amulet("ring2", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
+
+            items3.Add(new Amulet("testamulet3", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
+            items3.Add(new Amulet("ring3", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
+
+            stashTabs.Add(new QuadTab("Dump", items));
+            stashTabs.Add(new PremiumTab("Rings", items2));
+            stashTabs.Add(new NormalTab("2", items3));
 
             foreach (StashTab stashTab in stashTabs)
             {
                 this.listViewTabs.Items.Add(stashTab);
             }
-
-            // testing the listView for Items
-            List<Item> items = new List<Item>();
-
-            for (int i = 0; i < 3; i++)
-            {
-                items.Add(new Amulet("testamulet", ItemRarity.rare, ItemBase.shaper, false, 81, null, "5c"));
-                items.Add(new Amulet("ring", ItemRarity.normal, ItemBase.normal, false, 81, null, "3alch"));
-                items.Add(new Amulet("mark of", ItemRarity.unique, ItemBase.elder, false, 81, null, "1ex"));
-                items.Add(new Ring("testring", ItemRarity.rare, ItemBase.shaper, false, 81,null, null, "0.7ex"));
-            }
-
-            foreach(Item item in items)
-            {
-                this.listViewItems.Items.Add(item);
-            }
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // value = sessionid
-
-            Cookie cookie = new Cookie();
-            cookie.Value = "";
-            cookie.Name = "POESESSID";
-            cookie.Domain = "pathofexile.com";
-            cookie.Secure = false;
-            cookie.Path = "/";
-            cookie.HttpOnly = false;
-
             // link to www.pathofexile.com/character-window/get-stash-items/?league={}&accountName={}&tabIndex={}&tabs={}
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("");
@@ -74,7 +62,7 @@ namespace pricecheckingtool
             request.KeepAlive = true;
             request.ContentType = "appication/json";
             request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(cookie);
+            request.CookieContainer.Add(CreateCookie());
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             string myResponse = "";
@@ -84,6 +72,34 @@ namespace pricecheckingtool
                 Debug.Print(myResponse);
             }
             response.Close();
+        }
+
+        private Cookie CreateCookie()
+        {
+            Cookie cookie = new Cookie();
+            cookie.Value = ""; // value = sessionid
+            cookie.Name = "POESESSID";
+            cookie.Domain = "pathofexile.com";
+            cookie.Secure = false;
+            cookie.Path = "/";
+            cookie.HttpOnly = false;
+
+            return cookie;
+        }
+
+        private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.listViewItems.Items.Clear();
+
+            var stashTab = (StashTab)(sender as ListView).SelectedItem;
+
+            if (stashTab != null)
+            {
+                foreach (Item item in stashTab.items)
+                {
+                    this.listViewItems.Items.Add(item);
+                }
+            }
         }
     }
 }

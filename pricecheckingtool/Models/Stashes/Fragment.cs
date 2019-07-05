@@ -10,7 +10,7 @@ namespace pricecheckingtool
     {
         //size of fragement tab is irrelevant
 
-        public Fragment(string name) : base(name, 0, StashTabTypes.Fragment)
+        public Fragment(string name, List<Item> items) : base(name, 0, StashTabTypes.Fragment, items)
         {
 
         }

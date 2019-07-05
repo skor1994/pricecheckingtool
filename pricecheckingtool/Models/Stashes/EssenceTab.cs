@@ -10,7 +10,7 @@ namespace pricecheckingtool.Models.Stashes
     {
         //size of essencetab is irrelevant
 
-        public EssenceTab(string name) : base(name, 0, StashTabTypes.Essence)
+        public EssenceTab(string name, List<Item> items) : base(name, 0, StashTabTypes.Essence, items)
         {
 
         }

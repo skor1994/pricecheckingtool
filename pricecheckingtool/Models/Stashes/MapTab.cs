@@ -10,7 +10,7 @@ namespace pricecheckingtool
     {
         // size of maptab is irrelevant
 
-        public MapTab(string name) : base(name, 0, StashTabTypes.Map)
+        public MapTab(string name, List<Item> items) : base(name, 0, StashTabTypes.Map, items)
         {
 
         }

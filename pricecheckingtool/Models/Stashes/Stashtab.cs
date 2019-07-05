@@ -13,12 +13,14 @@ namespace pricecheckingtool
         public string name { get; }
         public int size { get; }
         public StashTabTypes stashTabTypes { get; }
+        public List<Item> items { get; }
 
-        public StashTab(string name, int size, StashTabTypes stashTabTypes)
+        public StashTab(string name, int size, StashTabTypes stashTabTypes, List<Item> items)
         {
             this.name = name;
             this.size = size;
             this.stashTabTypes = stashTabTypes;
+            this.items = items;
         }
     }
 }

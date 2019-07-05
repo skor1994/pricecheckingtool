@@ -8,7 +8,7 @@ namespace pricecheckingtool
 {
     class QuadTab : StashTab
     {
-        public QuadTab(string name) : base(name, 576, StashTabTypes.Quad)
+        public QuadTab(string name, List<Item> items) : base(name, 576, StashTabTypes.Quad, items)
         {
 
         }

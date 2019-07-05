@@ -8,7 +8,7 @@ namespace pricecheckingtool
 {
     class NormalTab : StashTab
     {
-        public NormalTab(string name) : base(name, 144, StashTabTypes.Normal)
+        public NormalTab(string name, List<Item> items) : base(name, 144, StashTabTypes.Normal, items)
         {
 
         }
