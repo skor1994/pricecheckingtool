@@ -62,6 +62,7 @@ namespace pricecheckingtool
                 bool isIdentified = false;
                 string typeLine = string.Empty;
                 int stackSize = 0;
+                List<string> explicitMods = new List<string>();
 
                 foreach (KeyValuePair<string, dynamic> keyValuePair in arrayList)
                 {
@@ -89,8 +90,15 @@ namespace pricecheckingtool
                     {
                         stackSize = (int)keyValuePair.Value;
                     }
+                    else if (keyValuePair.Key == "explicitMods")
+                    {
+                        foreach (string value in keyValuePair.Value)
+                        {
+                            explicitMods.Add(value);
+                        }
+                    }
                 }
-                items.Add(new Item(itemRarity, itemName, itemLvl, isIdentified, typeLine, stackSize));
+                items.Add(new Item(itemRarity, itemName, itemLvl, isIdentified, typeLine, stackSize, explicitMods));
             }
         }
 

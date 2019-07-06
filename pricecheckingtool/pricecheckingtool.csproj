@@ -64,14 +64,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Items\Amulet.cs" />
-    <Compile Include="Models\Items\Belt.cs" />
-    <Compile Include="Models\Items\BodyArmour.cs" />
-    <Compile Include="Models\Items\Boots.cs" />
-    <Compile Include="Models\Items\Gloves.cs" />
-    <Compile Include="Models\Items\Helmet.cs" />
-    <Compile Include="Models\Items\Item.cs" />
-    <Compile Include="Models\Items\Jewel.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -82,15 +75,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Items\OneHandedWeapon.cs" />
-    <Compile Include="Models\Items\Quiver.cs" />
-    <Compile Include="Models\Items\Ring.cs" />
-    <Compile Include="Models\Items\Shield.cs" />
     <Compile Include="Models\StashTab.cs" />
     <Compile Include="Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Items\TwoHandedWeapon.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
