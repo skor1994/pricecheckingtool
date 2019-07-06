@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
@@ -49,6 +52,23 @@ namespace pricecheckingtool
             itemlevel = itemLvl;
             isIdentified = identified;
         }
+        public void FetchItemPriceFromSite()
+        {
+            string link = $"www.poeprices.info/api";
+            string data = string.Empty;
 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
+            request.Method = "Get";
+            request.KeepAlive = true;
+            request.ContentType = "appication/json";
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+            {
+                data = new JavaScriptSerializer().Deserialize<string>(sr.ReadToEnd());
+            }
+            response.Close();
+        }
     }
 }
