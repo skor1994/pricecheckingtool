@@ -61,6 +61,7 @@ namespace pricecheckingtool
                 int itemLvl = 0;
                 bool isIdentified = false;
                 string typeLine = string.Empty;
+                int stackSize = 0;
 
                 foreach (KeyValuePair<string, dynamic> keyValuePair in arrayList)
                 {
@@ -84,8 +85,12 @@ namespace pricecheckingtool
                     {
                         typeLine = (string)keyValuePair.Value;
                     }
+                    else if (keyValuePair.Key == "stackSize")
+                    {
+                        stackSize = (int)keyValuePair.Value;
+                    }
                 }
-                items.Add(new Item(itemRarity, itemName, itemLvl, isIdentified, typeLine));
+                items.Add(new Item(itemRarity, itemName, itemLvl, isIdentified, typeLine, stackSize));
             }
         }
 

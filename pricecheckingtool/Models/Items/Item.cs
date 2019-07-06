@@ -21,6 +21,7 @@ namespace pricecheckingtool
         public int itemlevel { get; }
         public Dictionary<char, int> socketsAndColors { get; }
         public int links { get; }
+        public int stackSize { get; }
         public string typeLine { get; }
         public string value { get; }
 
@@ -37,10 +38,11 @@ namespace pricecheckingtool
             this.mods = mods;
             this.value = value;
         }
-        public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine)
+        public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine, int stackSize)
         {
             this.itemRarity = (ItemRarity)itemRarity;
             this.typeLine = typeLine;
+            this.stackSize = stackSize;
             name = itemName;
             itemlevel = itemLvl;
             isIdentified = identified;

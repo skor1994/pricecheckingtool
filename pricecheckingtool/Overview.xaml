@@ -18,9 +18,10 @@
         <ListView x:Name="listViewItems" Height="auto" Width="auto" HorizontalAlignment="Right" Margin="50" Background="#FFFDFDFD">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ItemName" Width="150" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="ItemTypeLine" Width="150" DisplayMemberBinding="{Binding typeLine}"/>
-                    <GridViewColumn Header="ItemRarity" Width="100" DisplayMemberBinding="{Binding itemRarity}"/>
+                    <GridViewColumn Header="ItemName" Width="auto" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="ItemTypeLine" Width="auto" DisplayMemberBinding="{Binding typeLine}"/>
+                    <GridViewColumn Header="ItemRarity" Width="auto" DisplayMemberBinding="{Binding itemRarity}"/>
+                    <GridViewColumn Header="StackSize" Width="auto" DisplayMemberBinding="{Binding stackSize}"/>
                     <GridViewColumn Header="ItemValue" Width="auto" DisplayMemberBinding="{Binding value}"/>
                 </GridView>
             </ListView.View>
