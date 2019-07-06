@@ -61,7 +61,7 @@ namespace pricecheckingtool
             }
         }
 
-        private Dictionary<string, dynamic> FetchUserStashTabs()
+        private Dictionary<string, dynamic> FetchUserStashTabs(Cookie cookie)
         {
             string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accName}&tabs=1";
             Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
@@ -71,7 +71,7 @@ namespace pricecheckingtool
             request.KeepAlive = true;
             request.ContentType = "appication/json";
             request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(GetCookie());
+            request.CookieContainer.Add(cookie);
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -84,20 +84,21 @@ namespace pricecheckingtool
             return data;
         }
 
-        public void GetUserStashTabs()
+        
+        public void GetUserStashTabs(Cookie cookie)
         {
             stashTabs.Clear();
-            Dictionary<string, dynamic> userStashTabs = FetchUserStashTabs();
+            Dictionary<string, dynamic> userStashTabs = FetchUserStashTabs(cookie);
 
             foreach(var arrayList in userStashTabs["tabs"])
             {
                 string name = string.Empty;
                 string type = string.Empty;
                 string id = string.Empty;
+                int number = 0;
 
                 foreach (KeyValuePair<string, dynamic> keyValuePair in arrayList)
                 {
-                    Debug.Print(keyValuePair.Key);
                     if(keyValuePair.Key == "n")
                     {
                         name = keyValuePair.Value;
@@ -110,23 +111,14 @@ namespace pricecheckingtool
                     {
                         id = keyValuePair.Value;
                     }
+                    else if (keyValuePair.Key == "i")
+                    {
+                        number = (int) keyValuePair.Value;
+                    }
                 }
 
-                stashTabs.Add(new StashTab(name, type, id, null));
+                stashTabs.Add(new StashTab(name, type, id, number, null));
             }
-        }
-
-        private Cookie GetCookie()
-        {
-            Cookie cookie = new Cookie();
-            cookie.Value = sessionID;
-            cookie.Name = "POESESSID";
-            cookie.Domain = "pathofexile.com";
-            cookie.Secure = false;
-            cookie.Path = "/";
-            cookie.HttpOnly = false;
-
-            return cookie;
         }
     }
 }

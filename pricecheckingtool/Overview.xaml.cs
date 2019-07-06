@@ -34,7 +34,7 @@ namespace pricecheckingtool
         private void InitializeStashTabView()
         {
             
-            user.GetUserStashTabs();
+            user.GetUserStashTabs(GetCookie());
 
             foreach (StashTab stashTab in user.stashTabs)
             {
@@ -58,9 +58,21 @@ namespace pricecheckingtool
             {
                 foreach (Item item in stashTab.items)
                 {
-                    this.listViewItems.Items.Add(item);
+                    listViewItems.Items.Add(item);
                 }
             }
+        }
+        public static Cookie GetCookie()
+        {
+            Cookie cookie = new Cookie();
+            cookie.Value = user.sessionID;
+            cookie.Name = "POESESSID";
+            cookie.Domain = "pathofexile.com";
+            cookie.Secure = false;
+            cookie.Path = "/";
+            cookie.HttpOnly = false;
+
+            return cookie;
         }
     }
 }
