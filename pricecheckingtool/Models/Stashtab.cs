@@ -18,12 +18,11 @@ namespace pricecheckingtool
         public int number { get; set; }
         public List<Item> items = new List<Item>();
 
-        public StashTab(string name, string type, string id, int number, List<Item> items)
+        public StashTab(string name, string type, string id, int number)
         {
             this.name = name;
             this.type = type;
             this.id = id;
-            this.items = items;
             this.number = number;
         }
 
@@ -50,9 +49,44 @@ namespace pricecheckingtool
             return data;
         }
 
-        public void GetStashInventory()
+        public void GetStashInventory(Cookie cookie, string accName)
         {
+            items.Clear();
+            Dictionary<string, dynamic> stashInventory = FetchStashInventory(cookie, accName);
 
+            foreach (var arrayList in stashInventory["items"])
+            {
+                int itemRarity = 0;               
+                string itemName = string.Empty;
+                int itemLvl = 0;
+                bool isIdentified = false;
+                string typeLine = string.Empty;
+
+                foreach (KeyValuePair<string, dynamic> keyValuePair in arrayList)
+                {
+                    if (keyValuePair.Key == "frameType")
+                    {
+                        itemRarity = (int)keyValuePair.Value;
+                    }
+                    else if (keyValuePair.Key == "name")
+                    {
+                        itemName = (string)keyValuePair.Value;
+                    }
+                    else if (keyValuePair.Key == "ilvl")
+                    {
+                        itemLvl = (int)keyValuePair.Value;
+                    }
+                    else if (keyValuePair.Key == "identified")
+                    {
+                        isIdentified = (bool)keyValuePair.Value;
+                    }
+                    else if (keyValuePair.Key == "typeLine")
+                    {
+                        typeLine = (string)keyValuePair.Value;
+                    }
+                }
+                items.Add(new Item(itemRarity, itemName, itemLvl, isIdentified, typeLine));
+            }
         }
 
     }

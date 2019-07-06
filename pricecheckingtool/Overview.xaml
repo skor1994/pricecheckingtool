@@ -5,23 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pricecheckingtool"
         mc:Ignorable="d"
-        Title="Overview" Height="600" Width="800">
+        Title="Overview" Height="600" Width="800" ResizeMode="CanMinimize">
     <Grid>
-        <ListView MouseLeftButtonUp="ListViewTabs_MouseLeftButtonUp" x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="220" HorizontalAlignment="Left" >
+        <ListView MouseLeftButtonUp="ListViewTabs_MouseLeftButtonUp" x:Name="listViewTabs" Background="#FFFDFDFD" Height="auto" Width="auto" HorizontalAlignment="Left" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="StashTabType" Width="120" DisplayMemberBinding="{Binding type}"/>
+                    <GridViewColumn Header="StashTabName" Width="auto" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="StashTabType" Width="auto" DisplayMemberBinding="{Binding type}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="listViewItems" Height="auto" Width="400" HorizontalAlignment="Right" Margin="100" Background="#FFFDFDFD">
+        <ListView x:Name="listViewItems" Height="auto" Width="auto" HorizontalAlignment="Right" Margin="50" Background="#FFFDFDFD">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ItemName" Width="100" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemBaseType}"/>
-                    <GridViewColumn Header="ItemBaseType" Width="100" DisplayMemberBinding="{Binding itemRarity}"/>
-                    <GridViewColumn Header="ItemValue" Width="100" DisplayMemberBinding="{Binding value}"/>
+                    <GridViewColumn Header="ItemName" Width="150" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="ItemTypeLine" Width="150" DisplayMemberBinding="{Binding typeLine}"/>
+                    <GridViewColumn Header="ItemRarity" Width="100" DisplayMemberBinding="{Binding itemRarity}"/>
+                    <GridViewColumn Header="ItemValue" Width="auto" DisplayMemberBinding="{Binding value}"/>
                 </GridView>
             </ListView.View>
         </ListView>

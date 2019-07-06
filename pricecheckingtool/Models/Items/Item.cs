@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace pricecheckingtool
 {
-    enum ItemRarity { normal, magic, rare, unique };
+    enum ItemRarity { normal, magic, rare, unique, gem, currency, divination, quest, prophecy, relic };
     enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Ring, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver };
     enum ItemBase { shaper, elder, normal };
 
-    abstract class Item
+    class Item
     {
         public string name { get; }
         public ItemRarity itemRarity { get; }
@@ -21,6 +21,7 @@ namespace pricecheckingtool
         public int itemlevel { get; }
         public Dictionary<char, int> socketsAndColors { get; }
         public int links { get; }
+        public string typeLine { get; }
         public string value { get; }
 
         public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value)
@@ -35,6 +36,14 @@ namespace pricecheckingtool
             this.links = links;
             this.mods = mods;
             this.value = value;
+        }
+        public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine)
+        {
+            this.itemRarity = (ItemRarity)itemRarity;
+            this.typeLine = typeLine;
+            name = itemName;
+            itemlevel = itemLvl;
+            isIdentified = identified;
         }
 
     }

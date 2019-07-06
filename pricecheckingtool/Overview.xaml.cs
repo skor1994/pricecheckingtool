@@ -34,7 +34,7 @@ namespace pricecheckingtool
         private void InitializeStashTabView()
         {
             
-            user.GetUserStashTabs(GetCookie());
+            user.GetStashTabs(GetCookie());
 
             foreach (StashTab stashTab in user.stashTabs)
             {
@@ -56,6 +56,8 @@ namespace pricecheckingtool
 
             if (stashTab != null)
             {
+                stashTab.GetStashInventory(GetCookie(), user.accName);
+
                 foreach (Item item in stashTab.items)
                 {
                     listViewItems.Items.Add(item);

@@ -85,7 +85,7 @@ namespace pricecheckingtool
         }
 
         
-        public void GetUserStashTabs(Cookie cookie)
+        public void GetStashTabs(Cookie cookie)
         {
             stashTabs.Clear();
             Dictionary<string, dynamic> userStashTabs = FetchUserStashTabs(cookie);
@@ -117,7 +117,7 @@ namespace pricecheckingtool
                     }
                 }
 
-                stashTabs.Add(new StashTab(name, type, id, number, null));
+                stashTabs.Add(new StashTab(name, type, id, number));
             }
         }
     }
