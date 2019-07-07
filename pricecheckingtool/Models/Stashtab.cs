@@ -13,8 +13,9 @@ namespace pricecheckingtool
 
     class StashTab
     {
+        public string n { get; set; }
         public string name { get; }
-        public string type { get; }
+        public string type { get; set; }
         public string id { get; }
         public int number { get; set; }
         public List<Item> items = new List<Item>();
@@ -26,9 +27,10 @@ namespace pricecheckingtool
             this.id = id;
             this.number = number;
         }
+        public StashTab()
+        {
 
-        //private static HttpClientHandler handler = new HttpClientHandler();
-        //private static HttpClient client;
+        }
 
         private Dictionary<string, dynamic> FetchStashInventory(Cookie cookie, string accName)
         {

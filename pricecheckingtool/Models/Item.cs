@@ -41,6 +41,7 @@ namespace pricecheckingtool
             itemlevel = itemLvl;
             isIdentified = identified;
             checkPrice();
+      
         }
 
         public Item()
@@ -53,17 +54,24 @@ namespace pricecheckingtool
             if(itemRarity == ItemRarity.Prophecy)
             {
                 int index = PriceLists.prophecy.FindIndex(i => i.name == typeLine);
-                mean = PriceLists.prophecy.ElementAt(index).mean;
+                mean = Math.Round(PriceLists.prophecy.ElementAt(index).mean, 1);
             }
             else if (itemRarity == ItemRarity.Divination)
             {
                 int index = PriceLists.card.FindIndex(i => i.name == typeLine);
-                mean = PriceLists.card.ElementAt(index).mean;
+                mean = Math.Round(PriceLists.card.ElementAt(index).mean, 1);
             }
             else if (itemRarity == ItemRarity.Currency)
             {
                 int index = PriceLists.currency.FindIndex(i => i.name == typeLine);
-                mean = PriceLists.currency.ElementAt(index).mean;
+                if(index < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    mean = Math.Round(PriceLists.currency.ElementAt(index).mean, 1);
+                }
             }
         }
     }
