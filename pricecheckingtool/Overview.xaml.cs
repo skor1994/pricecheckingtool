@@ -24,11 +24,13 @@ namespace pricecheckingtool
     public partial class Overview : Window
     {
         static User user = new User();
+        static PriceLists priceLists = new PriceLists();
 
         public Overview()
         {
             InitializeComponent();
             InitializeStashTabView();
+            priceLists.GetPrices();
         }
 
         private void InitializeStashTabView()

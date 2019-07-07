@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -26,6 +27,9 @@ namespace pricecheckingtool
             this.number = number;
         }
 
+        //private static HttpClientHandler handler = new HttpClientHandler();
+        //private static HttpClient client;
+
         private Dictionary<string, dynamic> FetchStashInventory(Cookie cookie, string accName)
         {
             string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accName}&tabIndex={number}";
@@ -48,7 +52,7 @@ namespace pricecheckingtool
 
             return data;
         }
-
+        
         public void GetStashInventory(Cookie cookie, string accName)
         {
             items.Clear();

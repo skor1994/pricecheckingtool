@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
-    enum ItemRarity { normal, magic, rare, unique, gem, currency, divination, quest, prophecy, relic };
+    enum ItemRarity { Normal, Magic, Rare, Unique, Gem, Currency, Divination, Quest, Prophecy, Relic };
     enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Ring, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver };
     enum ItemBase { shaper, elder, normal };
 
-    class Item
+    class Item 
     {
-        public string name { get; }
+        public string name { get; set; }
+        public double mean { get; set; }
         public ItemRarity itemRarity { get; }
         public ItemBaseType itemBaseType { get; }
         public ItemBase itemBase { get; }
@@ -27,21 +30,7 @@ namespace pricecheckingtool
         public int links { get; }
         public int stackSize { get; }
         public string typeLine { get; }
-        public string value { get; }
 
-        public Item(string name, ItemRarity itemRarity, ItemBaseType itemBaseType, ItemBase itemBase, bool isIdentified, int itemlevel, Dictionary<char, int> socketsAndColors, int links, string[] mods, string value)
-        {
-            this.name = name;
-            this.itemRarity = itemRarity;
-            this.itemBaseType = itemBaseType;
-            this.itemBase = itemBase;
-            this.isIdentified = isIdentified;
-            this.itemlevel = itemlevel;
-            this.socketsAndColors = socketsAndColors;
-            this.links = links;
-            this.mods = mods;
-            this.value = value;
-        }
         public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine, int stackSize, List<string> explicitMods)
         {
             this.itemRarity = (ItemRarity)itemRarity;
@@ -51,24 +40,31 @@ namespace pricecheckingtool
             name = itemName;
             itemlevel = itemLvl;
             isIdentified = identified;
+            checkPrice();
         }
-        public void FetchItemPriceFromSite()
+
+        public Item()
         {
-            string link = $"www.poeprices.info/api";
-            string data = string.Empty;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
-            request.Method = "Get";
-            request.KeepAlive = true;
-            request.ContentType = "appication/json";
+        }
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+        private void checkPrice()
+        {
+            if(itemRarity == ItemRarity.Prophecy)
             {
-                data = new JavaScriptSerializer().Deserialize<string>(sr.ReadToEnd());
+                int index = PriceLists.prophecy.FindIndex(i => i.name == typeLine);
+                mean = PriceLists.prophecy.ElementAt(index).mean;
             }
-            response.Close();
+            else if (itemRarity == ItemRarity.Divination)
+            {
+                int index = PriceLists.card.FindIndex(i => i.name == typeLine);
+                mean = PriceLists.card.ElementAt(index).mean;
+            }
+            else if (itemRarity == ItemRarity.Currency)
+            {
+                int index = PriceLists.currency.FindIndex(i => i.name == typeLine);
+                mean = PriceLists.currency.ElementAt(index).mean;
+            }
         }
     }
 }

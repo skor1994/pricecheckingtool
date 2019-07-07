@@ -22,7 +22,7 @@
                     <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}"/>
                     <GridViewColumn Header="ItemRarity" Width="auto" DisplayMemberBinding="{Binding itemRarity}"/>
                     <GridViewColumn Header="StackSize" Width="auto" DisplayMemberBinding="{Binding stackSize}"/>
-                    <GridViewColumn Header="ItemValue" Width="auto" DisplayMemberBinding="{Binding value}"/>
+                    <GridViewColumn Header="ItemValue" Width="auto" DisplayMemberBinding="{Binding mean}"/>
                 </GridView>
             </ListView.View>
         </ListView>
