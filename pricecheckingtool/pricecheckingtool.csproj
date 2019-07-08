@@ -94,7 +94,7 @@
     <Compile Include="ViewModels\ItemView.cs" />
     <Compile Include="ViewModels\StashTabView.cs" />
     <Compile Include="ViewModels\UserView.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -103,11 +103,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Item.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Overview.xaml">
+    <Page Include="Views\Overview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,7 +115,7 @@
   <ItemGroup>
     <Compile Include="Models\PriceLists.cs" />
     <Compile Include="Models\StashTab.cs" />
-    <Compile Include="Overview.xaml.cs">
+    <Compile Include="Views\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs" />
