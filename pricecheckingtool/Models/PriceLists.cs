@@ -10,7 +10,7 @@ namespace pricecheckingtool
 {
     enum Category { weapon, prophecy, map, jewel, flask, card, currency, armour, accessory, gem}
 
-    class PriceLists
+    public sealed class PriceLists
     {
         private static readonly HttpClient client = new HttpClient();
 

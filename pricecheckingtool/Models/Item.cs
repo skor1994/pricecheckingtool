@@ -11,17 +11,13 @@ using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
-    enum ItemRarity { Normal, Magic, Rare, Unique, Gem, Currency, Divination, Quest, Prophecy, Relic };
-    enum ItemBaseType { OneHandedWeapon, TwoHandedWeapon, Jewel, Ring, Amulet, Belt, Gloves, Boots, BodyArmour, Helmet, Shield, Quiver };
-    enum ItemBase { shaper, elder, normal };
+    public enum ItemRarity { Normal, Magic, Rare, Unique, Gem, Currency, Divination, Quest, Prophecy, Relic };
 
-    class Item 
+    public sealed class Item 
     {
         public string name { get; set; }
         public double mean { get; set; }
-        public ItemRarity itemRarity { get; }
-        public ItemBaseType itemBaseType { get; }
-        public ItemBase itemBase { get; }
+        public ItemRarity ItemRarity { get; }
         public bool isIdentified { get; }
         List<string> explicitMods { get; }
         public string[] mods { get; }
@@ -33,7 +29,7 @@ namespace pricecheckingtool
 
         public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine, int stackSize, List<string> explicitMods)
         {
-            this.itemRarity = (ItemRarity)itemRarity;
+            this.ItemRarity = (ItemRarity)itemRarity;
             this.typeLine = typeLine;
             this.stackSize = stackSize;
             this.explicitMods = explicitMods;
@@ -51,17 +47,17 @@ namespace pricecheckingtool
 
         private void checkPrice()
         {
-            if(itemRarity == ItemRarity.Prophecy)
+            if(ItemRarity == ItemRarity.Prophecy)
             {
                 int index = PriceLists.prophecy.FindIndex(i => i.name == typeLine);
                 mean = Math.Round(PriceLists.prophecy.ElementAt(index).mean, 1);
             }
-            else if (itemRarity == ItemRarity.Divination)
+            else if (ItemRarity == ItemRarity.Divination)
             {
                 int index = PriceLists.card.FindIndex(i => i.name == typeLine);
                 mean = Math.Round(PriceLists.card.ElementAt(index).mean, 1);
             }
-            else if (itemRarity == ItemRarity.Currency)
+            else if (ItemRarity == ItemRarity.Currency)
             {
                 int index = PriceLists.currency.FindIndex(i => i.name == typeLine);
                 if(index < 0)

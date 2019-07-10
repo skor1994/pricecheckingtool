@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 namespace pricecheckingtool
 {
 
-    class StashTab
+    public sealed class StashTab
     {
         public string n { get; set; }
         public string name { get; }
@@ -19,6 +19,7 @@ namespace pricecheckingtool
         public string id { get; }
         public int number { get; set; }
         public List<Item> items = new List<Item>();
+
 
         public StashTab(string name, string type, string id, int number)
         {

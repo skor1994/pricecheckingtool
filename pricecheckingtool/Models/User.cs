@@ -12,26 +12,26 @@ using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
-    class User
+    public sealed class User
     {
-        public string sessionID { get; private set; }
-        public string accName { get; private set; }
-        public List<StashTab> stashTabs = new List<StashTab>();
+        public string sessionID { get; set; }
+        public string accountName { get; set; }
+        public string league { get; set; }
+        public List<StashTab> stashTabs { get; set; } = new List<StashTab>();
 
-        public User(string sessionID, string accName)
+        public User(string sessionID, string accountName, string league)
         {
             this.sessionID = sessionID;
-            this.accName = accName;
-
-            WriteToFile();
+            this.accountName = accountName;
+            this.league = league;
         }
-
         public User()
         {
-            GetDataFromFile();
+            this.sessionID = "Placeholder";
+            this.accountName = "Placeholder";
+            this.league = "Placeholder";
         }
-
-        private void WriteToFile()
+        public void WriteToFile()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
 
@@ -42,13 +42,24 @@ namespace pricecheckingtool
                 using (TextWriter tw = new StreamWriter(path))
                 {
                     tw.WriteLine($"sessionID:{sessionID}");
-                    tw.WriteLine($"accName:{accName}");
+                    tw.WriteLine($"accName:{accountName}");
+                    tw.WriteLine($"league:{league}");
                     tw.Close();
                 }
             }
         }
 
-        private void GetDataFromFile()
+        public bool HasDataFile()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
+
+            if (File.Exists(path))
+                return true;
+            else
+                return false;
+        }
+
+        public void GetDataFromFile()
         {
             StreamReader reader = File.OpenText(AppDomain.CurrentDomain.BaseDirectory + "user.txt");
             string line = string.Empty;
@@ -58,13 +69,15 @@ namespace pricecheckingtool
                 if (line.Contains("sessionID"))
                     sessionID = line.Remove(0, 10);
                 else if (line.Contains("accName"))
-                    accName = line.Remove(0, 8);
+                    accountName = line.Remove(0, 8);
+                else if (line.Contains("league"))
+                    accountName = line.Remove(0, 7);
             }
         }
 
         private Dictionary<string, dynamic> FetchUserStashTabs(Cookie cookie)
         {
-            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accName}&tabs=1";
+            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accountName}&tabs=1";
             Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);
@@ -119,6 +132,18 @@ namespace pricecheckingtool
 
                 stashTabs.Add(new StashTab(name, type, id, number));
             }
+        }
+        public Cookie GetCookie()
+        {
+            Cookie cookie = new Cookie();
+            cookie.Value = sessionID;
+            cookie.Name = "POESESSID";
+            cookie.Domain = "pathofexile.com";
+            cookie.Secure = false;
+            cookie.Path = "/";
+            cookie.HttpOnly = false;
+
+            return cookie;
         }
     }
 }
