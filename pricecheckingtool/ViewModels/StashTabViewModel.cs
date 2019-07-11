@@ -11,31 +11,22 @@ namespace pricecheckingtool.ViewModels
 {
     public sealed class StashTabViewModel : ViewModelBase
     {
-        private readonly User user = UserViewModel.user;
+        private readonly User user = App.user;
+        private readonly List<StashTab> stashTabs = App.user.stashTabs;
+        private readonly PriceLists priceLists = new PriceLists();
         public ICommand command;
 
+        public ICommand FetchPricesCommand
+        {
+            get
+            {
+                return command ?? (command = new DelegateCommand(() => FetchPrices()));
+            }
+        }
 
-        
-
-
-        //priceLists.GetPrices();
-
-
-        //private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    listViewItems.Items.Clear();
-
-        //    var stashTab = (StashTab)(sender as ListView).SelectedItem;
-
-        //    if (stashTab != null)
-        //    {
-        //        stashTab.GetStashInventory(GetCookie(), user.accountName);
-
-        //        foreach (Item item in stashTab.items)
-        //        {
-        //            listViewItems.Items.Add(item);
-        //        }
-        //    }
-        //}
+        private void FetchPrices()
+        {
+            priceLists.GetPrices();
+        }
     }
 }

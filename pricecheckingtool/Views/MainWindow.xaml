@@ -10,9 +10,10 @@
 
     <Grid>
         <StackPanel>
-            <Views:UserView Margin="5"/>
-            <DockPanel Margin="5">
-                <Views:StashTabView Width="200" Height="450"/>
+            <Views:UserInformationView Margin="5"/>
+            <DockPanel Margin="5" Height="450">
+                <Views:UserStashTabView Width="200"/>
+                <Views:StashTabOverview Width="500"/>
             </DockPanel>
         </StackPanel>
     </Grid>

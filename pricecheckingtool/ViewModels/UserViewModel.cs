@@ -12,7 +12,7 @@ namespace pricecheckingtool.ViewModels
 {
     public sealed class UserViewModel : ViewModelBase
     {
-        public static User user = new User();
+        private readonly User user = App.user;
         public ICommand command;
 
         public string AccountName
@@ -85,5 +85,49 @@ namespace pricecheckingtool.ViewModels
             }
         }
 
+        public ICommand FetchStashInventoryCommand
+        {
+            get
+            {
+                return command ?? (command = new DelegateCommand(() => FetchStashInventory()));
+            }
+        }
+
+        private void FetchStashInventory()
+        {
+            if (!user.HasDataFile())
+            {
+                user.WriteToFile();
+            }
+        }
+
+        public ICommand MouseClickCommand
+        {
+            get
+            {
+                return command ?? (command = new DelegateCommand(() => MouseClick()));
+            }
+        }
+
+        private void MouseClick()
+        {
+           
+        }
+        //private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    listViewItems.Items.Clear();
+
+        //    var stashTab = (StashTab)(sender as ListView).SelectedItem;
+
+        //    if (stashTab != null)
+        //    {
+        //        stashTab.GetStashInventory(GetCookie(), user.accountName);
+
+        //        foreach (Item item in stashTab.items)
+        //        {
+        //            listViewItems.Items.Add(item);
+        //        }
+        //    }
+        //}
     }
 }

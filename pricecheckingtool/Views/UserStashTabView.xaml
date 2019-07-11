@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="pricecheckingtool.Views.StashTabView"
+﻿<UserControl x:Class="pricecheckingtool.Views.UserStashTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +10,13 @@
              d:DesignHeight="450" d:DesignWidth="200"
              d:DataContext="{d:DesignInstance ViewModels:UserViewModel}">
 
-    <ListView ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Click">
+            <i:InvokeCommandAction Command="{Binding MouseClickCommand}" CommandParameter="{Binding ElementName=StashView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <ListView Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD">
         <ListView.View>
             <GridView>
                 <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding name}"/>

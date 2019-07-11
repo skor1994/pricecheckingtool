@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="pricecheckingtool.Views.StashTabOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewModels="clr-namespace:pricecheckingtool.ViewModels"
+             xmlns:local="clr-namespace:pricecheckingtool.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance ViewModels:StashTabViewModel}">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FetchPricesCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <ListView ItemsSource="{Binding Items}" Background="#FFFDFDFD">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding name}"/>
+                <GridViewColumn Header="ItemTypeLine" Width="125" DisplayMemberBinding="{Binding typeLine}"/>
+                <GridViewColumn Header="ItemStackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
+                <GridViewColumn Header="ItemValue" Width="125" DisplayMemberBinding="{Binding value}"/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+    
+</UserControl>
