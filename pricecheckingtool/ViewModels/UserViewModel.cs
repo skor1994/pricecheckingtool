@@ -111,7 +111,8 @@ namespace pricecheckingtool.ViewModels
 
         private void MouseClick()
         {
-           
+            //var stashTab = (StashTab)(sender as ListView).SelectedItem;
+            stashTab.GetStashInventory(user.GetCookie(), user.accountName);
         }
         //private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         //{
@@ -121,7 +122,7 @@ namespace pricecheckingtool.ViewModels
 
         //    if (stashTab != null)
         //    {
-        //        stashTab.GetStashInventory(GetCookie(), user.accountName);
+        //        
 
         //        foreach (Item item in stashTab.items)
         //        {
