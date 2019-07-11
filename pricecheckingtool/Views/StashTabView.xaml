@@ -8,19 +8,13 @@
              xmlns:ViewModels="clr-namespace:pricecheckingtool.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200"
-             d:DataContext="{d:DesignInstance ViewModels:StashTabViewModel}">
-    
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding FetchStabTabsCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+             d:DataContext="{d:DesignInstance ViewModels:UserViewModel}">
 
     <ListView ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD">
         <ListView.View>
             <GridView>
-                <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding Type}"/>
+                <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding name}"/>
+                <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding type}"/>
             </GridView>
         </ListView.View>
     </ListView>

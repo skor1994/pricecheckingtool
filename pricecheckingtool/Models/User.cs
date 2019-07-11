@@ -27,9 +27,7 @@ namespace pricecheckingtool
         }
         public User()
         {
-            this.sessionID = "Placeholder";
-            this.accountName = "Placeholder";
-            this.league = "Placeholder";
+
         }
         public void WriteToFile()
         {
@@ -68,10 +66,10 @@ namespace pricecheckingtool
             {
                 if (line.Contains("sessionID"))
                     sessionID = line.Remove(0, 10);
-                else if (line.Contains("accName"))
+                if (line.Contains("accName"))
                     accountName = line.Remove(0, 8);
-                else if (line.Contains("league"))
-                    accountName = line.Remove(0, 7);
+                if (line.Contains("league"))
+                    league = line.Remove(0, 7);
             }
         }
 

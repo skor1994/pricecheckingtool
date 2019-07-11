@@ -12,21 +12,11 @@ namespace pricecheckingtool.ViewModels
     public sealed class StashTabViewModel : ViewModelBase
     {
         private readonly User user = UserViewModel.user;
+        public ICommand command;
 
-        public IEnumerable StashTabs
-        {
-            get { return user.stashTabs; }
-        }
 
-        public ICommand FetchStashTabsCommand()
-        {
-            return new DelegateCommand(FetchStashTabs);
-        }
+        
 
-        private void FetchStashTabs()
-        {
-            user.GetStashTabs(user.GetCookie());
-        }
 
         //priceLists.GetPrices();
 

@@ -21,12 +21,12 @@ namespace pricecheckingtool.Views
     /// </summary>
     public partial class StashTabView : UserControl
     {
-        private readonly StashTabViewModel stashTabViewModel = new StashTabViewModel();
+        private readonly UserViewModel userViewModel = new UserViewModel();
 
         public StashTabView()
         {
             InitializeComponent();
-            DataContext = stashTabViewModel;
+            DataContext = userViewModel;
         }
     }
 }

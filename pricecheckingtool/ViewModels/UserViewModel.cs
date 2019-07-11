@@ -12,15 +12,8 @@ namespace pricecheckingtool.ViewModels
 {
     public sealed class UserViewModel : ViewModelBase
     {
-        public readonly static User user = new User();
-        private ICommand command;
-        public ICommand clickCommand
-        {
-            get
-            {
-                return command ?? (command = new DelegateCommand(() => LoadData()));
-            }
-        }
+        public static User user = new User();
+        public ICommand command;
 
         public string AccountName
         {
@@ -28,7 +21,7 @@ namespace pricecheckingtool.ViewModels
             set
             {
                 user.accountName = value;
-                RaisePropertyChanged("AccountName");
+                RaisePropertyChanged();
             }
         }
         public string SessionID
@@ -36,33 +29,52 @@ namespace pricecheckingtool.ViewModels
             get { return user.sessionID; }
             set
             {
-                user.accountName = value;
-                RaisePropertyChanged("SessionID");
+                user.sessionID = value;
+                RaisePropertyChanged();
             }
         }
         public string League
         {
-            get { return user.league; }
+            get
+            {
+                return user.league;
+            }
             set
             {
-                user.accountName = value;
-                RaisePropertyChanged("League");
+                user.league = value;
+                RaisePropertyChanged();
             }
         }
 
-        public ICommand LoadDataCommand()
+        public IEnumerable StashTabs
         {
-            return new DelegateCommand(LoadData);
+            get { return user.stashTabs; }
         }
 
+        public ICommand LoadDataCommand
+        {
+            get
+            {
+                return command ?? (command = new DelegateCommand(() => LoadData()));
+            }
+        }
         public void LoadData()
         {
             user.GetDataFromFile();
+            user.GetStashTabs(user.GetCookie());
+            
+            RaisePropertyChanged("AccountName");
+            RaisePropertyChanged("SessionID");
+            RaisePropertyChanged("League");
+            RaisePropertyChanged("StashTabs");
         }
 
-        public ICommand LoginCommand()
+        public ICommand LoginCommand
         {
-            return new DelegateCommand(Login);
+            get
+            {
+                return command ?? (command = new DelegateCommand(() => Login()));
+            }
         }
 
         private void Login()
