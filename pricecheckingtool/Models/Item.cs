@@ -50,12 +50,26 @@ namespace pricecheckingtool
             if(ItemRarity == ItemRarity.Prophecy)
             {
                 int index = PriceLists.prophecy.FindIndex(i => i.name == typeLine);
-                mean = Math.Round(PriceLists.prophecy.ElementAt(index).mean, 1);
+                if (index < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    mean = Math.Round(PriceLists.prophecy.ElementAt(index).mean, 1);
+                }           
             }
             else if (ItemRarity == ItemRarity.Divination)
             {
                 int index = PriceLists.card.FindIndex(i => i.name == typeLine);
-                mean = Math.Round(PriceLists.card.ElementAt(index).mean, 1);
+                if (index < 0)
+                {
+                    return;
+                }
+                else
+                {
+                    mean = Math.Round(PriceLists.card.ElementAt(index).mean, 1);
+                }                
             }
             else if (ItemRarity == ItemRarity.Currency)
             {

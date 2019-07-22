@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -13,23 +14,29 @@ namespace pricecheckingtool.ViewModels
     public sealed class UserViewModel : ViewModelBase
     {
         private readonly User user = App.user;
+        public ObservableCollection<Item> items { get; set; }
         public ICommand command;
+
+        public UserViewModel()
+        {
+            items = new ObservableCollection<Item>();
+        }
 
         public string AccountName
         {
-            get { return user.accountName; }
+            get { return user._accountName; }
             set
             {
-                user.accountName = value;
+                user._accountName = value;
                 RaisePropertyChanged();
             }
         }
         public string SessionID
         {
-            get { return user.sessionID; }
+            get { return user._sessionID; }
             set
             {
-                user.sessionID = value;
+                user._sessionID = value;
                 RaisePropertyChanged();
             }
         }
@@ -37,18 +44,23 @@ namespace pricecheckingtool.ViewModels
         {
             get
             {
-                return user.league;
+                return user._league;
             }
             set
             {
-                user.league = value;
+                user._league = value;
                 RaisePropertyChanged();
             }
         }
 
-        public IEnumerable StashTabs
+        public ObservableCollection<Item> Items
         {
-            get { return user.stashTabs; }
+            get { return items; }
+            set
+            {
+                items = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ICommand LoadDataCommand
@@ -58,15 +70,14 @@ namespace pricecheckingtool.ViewModels
                 return command ?? (command = new DelegateCommand(() => LoadData()));
             }
         }
+
         public void LoadData()
         {
             user.GetDataFromFile();
-            user.GetStashTabs(user.GetCookie());
             
             RaisePropertyChanged("AccountName");
             RaisePropertyChanged("SessionID");
             RaisePropertyChanged("League");
-            RaisePropertyChanged("StashTabs");
         }
 
         public ICommand LoginCommand
@@ -84,51 +95,5 @@ namespace pricecheckingtool.ViewModels
                 user.WriteToFile();
             }
         }
-
-        public ICommand FetchStashInventoryCommand
-        {
-            get
-            {
-                return command ?? (command = new DelegateCommand(() => FetchStashInventory()));
-            }
-        }
-
-        private void FetchStashInventory()
-        {
-            if (!user.HasDataFile())
-            {
-                user.WriteToFile();
-            }
-        }
-
-        public ICommand MouseClickCommand
-        {
-            get
-            {
-                return command ?? (command = new DelegateCommand(() => MouseClick()));
-            }
-        }
-
-        private void MouseClick()
-        {
-            //var stashTab = (StashTab)(sender as ListView).SelectedItem;
-            stashTab.GetStashInventory(user.GetCookie(), user.accountName);
-        }
-        //private void ListViewTabs_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    listViewItems.Items.Clear();
-
-        //    var stashTab = (StashTab)(sender as ListView).SelectedItem;
-
-        //    if (stashTab != null)
-        //    {
-        //        
-
-        //        foreach (Item item in stashTab.items)
-        //        {
-        //            listViewItems.Items.Add(item);
-        //        }
-        //    }
-        //}
     }
 }

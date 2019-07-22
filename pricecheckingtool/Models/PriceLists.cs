@@ -8,7 +8,7 @@ using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
-    enum Category { weapon, prophecy, map, jewel, flask, card, currency, armour, accessory, gem}
+    enum Category { weapon, prophecy, map, jewel, flask, card, currency, armour, accessory}
 
     public sealed class PriceLists
     {

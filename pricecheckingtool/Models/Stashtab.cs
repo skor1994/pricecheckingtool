@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,20 +15,13 @@ namespace pricecheckingtool
     public sealed class StashTab
     {
         public string n { get; set; }
-        public string name { get; }
+        public int i { get; set; }
         public string type { get; set; }
-        public string id { get; }
-        public int number { get; set; }
-        public List<Item> items = new List<Item>();
+        public string id { get; set; }
+        public bool hidden { get; set; }
+        public bool selected { get; set; }
+        public ObservableCollection<Item> items { get; set; } = new ObservableCollection<Item>();
 
-
-        public StashTab(string name, string type, string id, int number)
-        {
-            this.name = name;
-            this.type = type;
-            this.id = id;
-            this.number = number;
-        }
         public StashTab()
         {
 
@@ -35,7 +29,7 @@ namespace pricecheckingtool
 
         private Dictionary<string, dynamic> FetchStashInventory(Cookie cookie, string accName)
         {
-            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accName}&tabIndex={number}";
+            string link = $"www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={accName}&tabIndex={i}";
             Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + link);

@@ -95,16 +95,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\DelegateCommand.cs" />
-    <Compile Include="ViewModels\StashTabViewModel.cs" />
+    <Compile Include="Models\StashTabs.cs" />
+    <Compile Include="ViewModels\StashTabsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="Views\StashTabOverview.xaml.cs">
-      <DependentUpon>StashTabOverview.xaml</DependentUpon>
+    <Compile Include="Views\ItemsView.xaml.cs">
+      <DependentUpon>ItemsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserStashTabView.xaml.cs">
-      <DependentUpon>UserStashTabView.xaml</DependentUpon>
+    <Compile Include="Views\StashTabsView.xaml.cs">
+      <DependentUpon>StashTabsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserInformationView.xaml.cs">
-      <DependentUpon>UserInformationView.xaml</DependentUpon>
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -112,7 +113,7 @@
     </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Page Include="Views\StashTabOverview.xaml">
+    <Page Include="Views\ItemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,11 +121,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserStashTabView.xaml">
+    <Page Include="Views\StashTabsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserInformationView.xaml">
+    <Page Include="Views\UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

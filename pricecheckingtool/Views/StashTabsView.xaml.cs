@@ -17,16 +17,16 @@ using System.Windows.Shapes;
 namespace pricecheckingtool.Views
 {
     /// <summary>
-    /// Interaktionslogik für ItemView.xaml
+    /// Interaktionslogik für StashTabView.xaml
     /// </summary>
-    public partial class StashTabOverview : UserControl
+    public partial class StashTabsView : UserControl
     {
-        private readonly StashTabViewModel stashTabView = new StashTabViewModel();
+        private readonly StashTabsViewModel userStashTabViewModel = new StashTabsViewModel();
 
-        public StashTabOverview()
+        public StashTabsView()
         {
             InitializeComponent();
-            DataContext = stashTabView;
+            DataContext = userStashTabViewModel;
         }
     }
 }

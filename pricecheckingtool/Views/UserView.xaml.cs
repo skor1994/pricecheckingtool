@@ -19,11 +19,11 @@ namespace pricecheckingtool.Views
     /// <summary>
     /// Interaktionslogik für UserView.xaml
     /// </summary>
-    public partial class UserInformationView : UserControl
+    public partial class UserView : UserControl
     {
-        private readonly UserViewModel userViewModel = new UserViewModel();
+        private readonly ViewModels.UserViewModel userViewModel = new ViewModels.UserViewModel();
 
-        public UserInformationView()
+        public UserView()
         {
             InitializeComponent();
             DataContext = userViewModel;
