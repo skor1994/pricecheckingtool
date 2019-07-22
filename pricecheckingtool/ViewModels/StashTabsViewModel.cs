@@ -11,16 +11,28 @@ using System.Windows.Input;
 
 namespace pricecheckingtool.ViewModels
 {
-    class StashTabsViewModel : ViewModelBase
+    public class StashTabsViewModel : ViewModelBase
     {
         private readonly User user = App.user;
+        private readonly PriceLists priceLists = new PriceLists();
+        public StashInventory stashInventory = new StashInventory();
         private StashTabs stashTabs = new StashTabs();
-        private StashTab stashTab = new StashTab();
+        public StashTab stashTab = new StashTab();
         public ICommand command;
+
+        public StashTabsViewModel()
+        {
+            priceLists.GetPrices();
+        }
 
         public ObservableCollection<StashTab> StashTabs
         {
             get { return stashTabs.tabs; }
+        }
+
+        public ObservableCollection<Item> Items
+        {
+            get { return stashInventory.items; }
         }
 
         public StashTab selectedStashTab
@@ -29,6 +41,7 @@ namespace pricecheckingtool.ViewModels
             set
             {
                 stashTab = value;
+                GetItems();
                 RaisePropertyChanged();
             }
         }
@@ -54,6 +67,21 @@ namespace pricecheckingtool.ViewModels
             stashTabs = new JavaScriptSerializer().Deserialize<StashTabs>(responseString);
 
             RaisePropertyChanged("StashTabs");
+        }
+
+        public async void GetItems()
+        {
+            CookieContainer cookieContainer = new CookieContainer();
+            cookieContainer.Add(user.GetCookie());
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            httpClientHandler.CookieContainer = cookieContainer;
+            HttpClient httpClient = new HttpClient(httpClientHandler);
+
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user._accountName}&tabIndex={stashTab.i}";
+            var responseString = await httpClient.GetStringAsync(link);
+            stashInventory = new JavaScriptSerializer().Deserialize<StashInventory>(responseString);
+
+            RaisePropertyChanged("Items");
         }
     }
 }

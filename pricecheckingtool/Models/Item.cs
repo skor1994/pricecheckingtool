@@ -17,32 +17,29 @@ namespace pricecheckingtool
     {
         public string name { get; set; }
         public double mean { get; set; }
-        public ItemRarity ItemRarity { get; }
-        public bool isIdentified { get; }
-        List<string> explicitMods { get; }
-        public string[] mods { get; }
-        public int itemlevel { get; }
-        public Dictionary<char, int> socketsAndColors { get; }
-        public int links { get; }
-        public int stackSize { get; }
-        public string typeLine { get; }
-
-        public Item(int itemRarity, string itemName, int itemLvl, bool identified, string typeLine, int stackSize, List<string> explicitMods)
-        {
-            this.ItemRarity = (ItemRarity)itemRarity;
-            this.typeLine = typeLine;
-            this.stackSize = stackSize;
-            this.explicitMods = explicitMods;
-            name = itemName;
-            itemlevel = itemLvl;
-            isIdentified = identified;
-            checkPrice();
-      
-        }
+        public ItemRarity itemRarity { get; set; }
+        public bool identified { get; set; }
+        List<string> explicitMods { get; set; }
+        List<string> implicitMods { get; set; }
+        public int ilvl { get; set; }
+        public int stackSize { get; set; }
+        public string typeLine { get; set; }
+        public int frameType { get; set; }
+        public int frame { get; set; } // poe.watch
+        public string id { get; set; }
 
         public Item()
         {
 
+        }
+
+        public ItemRarity ItemRarity
+        {
+            get { return itemRarity; }
+            set
+            {
+                itemRarity = (ItemRarity) frameType;
+            }
         }
 
         private void checkPrice()

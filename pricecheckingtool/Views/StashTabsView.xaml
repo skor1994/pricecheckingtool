@@ -7,7 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:ViewModels="clr-namespace:pricecheckingtool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="200"
+             d:DesignHeight="450" d:DesignWidth="750"
              d:DataContext="{d:DesignInstance ViewModels:StashTabsViewModel}">
 
     <i:Interaction.Triggers>
@@ -16,13 +16,25 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <ListView Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD" SelectedItem="{Binding selectedStashTab}">
-        <ListView.View>
-            <GridView>
-                <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding n}"/>
-                <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding type}"/>
-            </GridView>
-        </ListView.View>
-    </ListView>
-    
+    <Grid>
+        <ListView HorizontalAlignment="Left" Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD" SelectedItem="{Binding selectedStashTab}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding n}"/>
+                    <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding type}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView HorizontalAlignment="Right" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="ItemTypeLine" Width="125" DisplayMemberBinding="{Binding typeLine}"/>
+                    <GridViewColumn Header="ItemStackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
+                    <GridViewColumn Header="ItemValue" Width="125" DisplayMemberBinding="{Binding value}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+
 </UserControl>

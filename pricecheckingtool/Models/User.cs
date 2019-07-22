@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {

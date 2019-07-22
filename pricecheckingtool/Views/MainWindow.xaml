@@ -12,8 +12,7 @@
         <StackPanel>
             <Views:UserView Margin="5"/>
             <DockPanel Margin="5" Height="450">
-                <Views:StashTabsView Width="200"/>
-                <Views:ItemsView Width="500"/>
+                <Views:StashTabsView Width="750"/>
             </DockPanel>
         </StackPanel>
     </Grid>

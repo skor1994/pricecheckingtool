@@ -95,12 +95,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Models\StashInventory.cs" />
     <Compile Include="Models\StashTabs.cs" />
     <Compile Include="ViewModels\StashTabsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Compile Include="Views\ItemsView.xaml.cs">
-      <DependentUpon>ItemsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\StashTabsView.xaml.cs">
       <DependentUpon>StashTabsView.xaml</DependentUpon>
     </Compile>
@@ -113,10 +111,6 @@
     </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Page Include="Views\ItemsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
