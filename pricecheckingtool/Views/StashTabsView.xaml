@@ -31,7 +31,7 @@
                     <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding name}"/>
                     <GridViewColumn Header="ItemTypeLine" Width="125" DisplayMemberBinding="{Binding typeLine}"/>
                     <GridViewColumn Header="ItemStackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
-                    <GridViewColumn Header="ItemValue" Width="125" DisplayMemberBinding="{Binding value}"/>
+                    <GridViewColumn Header="ItemValue" Width="125" DisplayMemberBinding="{Binding mean}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -81,6 +81,11 @@ namespace pricecheckingtool.ViewModels
             var responseString = await httpClient.GetStringAsync(link);
             stashInventory = new JavaScriptSerializer().Deserialize<StashInventory>(responseString);
 
+            foreach(Item item in stashInventory.items)
+            {
+                item.checkPrice();
+            }
+
             RaisePropertyChanged("Items");
         }
     }

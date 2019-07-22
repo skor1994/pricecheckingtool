@@ -11,13 +11,10 @@ using System.Web.Script.Serialization;
 
 namespace pricecheckingtool
 {
-    public enum ItemRarity { Normal, Magic, Rare, Unique, Gem, Currency, Divination, Quest, Prophecy, Relic };
-
     public sealed class Item 
     {
         public string name { get; set; }
         public double mean { get; set; }
-        public ItemRarity itemRarity { get; set; }
         public bool identified { get; set; }
         List<string> explicitMods { get; set; }
         List<string> implicitMods { get; set; }
@@ -25,7 +22,6 @@ namespace pricecheckingtool
         public int stackSize { get; set; }
         public string typeLine { get; set; }
         public int frameType { get; set; }
-        public int frame { get; set; } // poe.watch
         public string id { get; set; }
 
         public Item()
@@ -33,51 +29,28 @@ namespace pricecheckingtool
 
         }
 
-        public ItemRarity ItemRarity
+        public void checkPrice()
         {
-            get { return itemRarity; }
-            set
+            foreach(List<Item> item in PriceLists.prices)
             {
-                itemRarity = (ItemRarity) frameType;
-            }
-        }
+                if (frameType != 3)
+                {
+                    int index = item.FindIndex(i => i.name == typeLine);
 
-        private void checkPrice()
-        {
-            if(ItemRarity == ItemRarity.Prophecy)
-            {
-                int index = PriceLists.prophecy.FindIndex(i => i.name == typeLine);
-                if (index < 0)
-                {
-                    return;
+                    if (index > 0 && stackSize > 0)
+                        mean = stackSize * Math.Round(item.ElementAt(index).mean, 1);
+                    else if (index > 0)
+                        mean = Math.Round(item.ElementAt(index).mean, 1);
+                    else
+                        continue;
                 }
                 else
                 {
-                    mean = Math.Round(PriceLists.prophecy.ElementAt(index).mean, 1);
-                }           
-            }
-            else if (ItemRarity == ItemRarity.Divination)
-            {
-                int index = PriceLists.card.FindIndex(i => i.name == typeLine);
-                if (index < 0)
-                {
-                    return;
-                }
-                else
-                {
-                    mean = Math.Round(PriceLists.card.ElementAt(index).mean, 1);
-                }                
-            }
-            else if (ItemRarity == ItemRarity.Currency)
-            {
-                int index = PriceLists.currency.FindIndex(i => i.name == typeLine);
-                if(index < 0)
-                {
-                    return;
-                }
-                else
-                {
-                    mean = Math.Round(PriceLists.currency.ElementAt(index).mean, 1);
+                    int index = item.FindIndex(i => i.name == name);
+                    if (index > 0)
+                        mean = Math.Round(item.ElementAt(index).mean, 1);
+                    else
+                        continue;
                 }
             }
         }

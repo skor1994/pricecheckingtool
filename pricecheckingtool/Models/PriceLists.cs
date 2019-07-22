@@ -14,16 +14,7 @@ namespace pricecheckingtool
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public static List<Item> weapon = new List<Item>();
-        public static List<Item> prophecy = new List<Item>();
-        public static List<Item> map = new List<Item>();
-        public static List<Item> jewel = new List<Item>();
-        public static List<Item> flask = new List<Item>();
-        public static List<Item> card = new List<Item>();
-        public static List<Item> currency = new List<Item>();
-        public static List<Item> armour = new List<Item>();
-        public static List<Item> accessory = new List<Item>();
-
+        public static List<List<Item>> prices = new List<List<Item>>();
 
         public async void GetPrices()
         {
@@ -32,18 +23,20 @@ namespace pricecheckingtool
                 string link = $"https://api.poe.watch/get?league=Legion&category={category}";
                 var responseString = await client.GetStringAsync(link);
 
-                switch (category)
-                {
-                    case Category.weapon: weapon = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.prophecy: prophecy = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.map: map = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.jewel: jewel = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.flask: flask = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.card: card = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.currency: currency = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.armour: armour = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                    case Category.accessory: accessory = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                }              
+                prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));
+
+                //switch (category)
+                //{
+                //    case Category.weapon: weapon = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.prophecy: prophecy = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.map: map = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.jewel: jewel = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.flask: flask = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.card: card = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.currency: currency = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.armour: armour = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //    case Category.accessory: accessory = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
+                //}              
             }
         }
     }
