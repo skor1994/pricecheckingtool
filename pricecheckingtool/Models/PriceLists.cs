@@ -23,20 +23,7 @@ namespace pricecheckingtool
                 string link = $"https://api.poe.watch/get?league=Legion&category={category}";
                 var responseString = await client.GetStringAsync(link);
 
-                prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));
-
-                //switch (category)
-                //{
-                //    case Category.weapon: weapon = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.prophecy: prophecy = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.map: map = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.jewel: jewel = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.flask: flask = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.card: card = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.currency: currency = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.armour: armour = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //    case Category.accessory: accessory = new JavaScriptSerializer().Deserialize<List<Item>>(responseString); break;
-                //}              
+                prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));          
             }
         }
     }

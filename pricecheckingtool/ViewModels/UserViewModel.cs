@@ -73,7 +73,10 @@ namespace pricecheckingtool.ViewModels
 
         public void LoadData()
         {
-            user.GetDataFromFile();
+            if (user.HasDataFile())
+                user.GetDataFromFile();
+            else
+                user.WriteToFile();
             
             RaisePropertyChanged("AccountName");
             RaisePropertyChanged("SessionID");

@@ -28,10 +28,10 @@
         <ListView HorizontalAlignment="Right" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding name}"/>
-                    <GridViewColumn Header="ItemTypeLine" Width="125" DisplayMemberBinding="{Binding typeLine}"/>
-                    <GridViewColumn Header="ItemStackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
-                    <GridViewColumn Header="ItemValue" Width="125" DisplayMemberBinding="{Binding mean}"/>
+                    <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding itemName}"/>
+                    <GridViewColumn Header="StackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
+                    <GridViewColumn Header="SingleValue" Width="125" DisplayMemberBinding="{Binding singleValue}"/>
+                    <GridViewColumn Header="Value" Width="125" DisplayMemberBinding="{Binding value}"/>
                 </GridView>
             </ListView.View>
         </ListView>

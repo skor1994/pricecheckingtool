@@ -83,6 +83,8 @@ namespace pricecheckingtool.ViewModels
 
             foreach(Item item in stashInventory.items)
             {
+                item.SetItemName();
+                item.SetStackSize();
                 item.checkPrice();
             }
 

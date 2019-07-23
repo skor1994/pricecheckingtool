@@ -15,6 +15,10 @@ namespace pricecheckingtool
     {
         public string name { get; set; }
         public double mean { get; set; }
+        public double median { get; set; }
+        public double singleValue { get; set; }
+        public double value { get; set; }
+        public string itemName { get; set; }
         public bool identified { get; set; }
         List<string> explicitMods { get; set; }
         List<string> implicitMods { get; set; }
@@ -23,11 +27,6 @@ namespace pricecheckingtool
         public string typeLine { get; set; }
         public int frameType { get; set; }
         public string id { get; set; }
-
-        public Item()
-        {
-
-        }
 
         public void checkPrice()
         {
@@ -38,9 +37,19 @@ namespace pricecheckingtool
                     int index = item.FindIndex(i => i.name == typeLine);
 
                     if (index > 0 && stackSize > 0)
-                        mean = stackSize * Math.Round(item.ElementAt(index).mean, 1);
-                    else if (index > 0)
+                    {
                         mean = Math.Round(item.ElementAt(index).mean, 1);
+                        median = Math.Round(item.ElementAt(index).median, 1);
+                        singleValue = (mean + median) / 2;
+                        value = stackSize * singleValue;
+                    }
+                    else if (index > 0)
+                    {
+                        mean = Math.Round(item.ElementAt(index).mean, 1);
+                        median = Math.Round(item.ElementAt(index).median, 1);
+                        singleValue = (mean + median) / 2;
+                        value = singleValue;
+                    }                   
                     else
                         continue;
                 }
@@ -48,10 +57,33 @@ namespace pricecheckingtool
                 {
                     int index = item.FindIndex(i => i.name == name);
                     if (index > 0)
+                    {
                         mean = Math.Round(item.ElementAt(index).mean, 1);
+                        median = Math.Round(item.ElementAt(index).median, 1);
+                        singleValue = (mean + median) / 2;
+                        value = singleValue;
+                    }      
                     else
                         continue;
                 }
+            }
+        }
+        public void SetItemName()
+        {
+            if(name == null || name == "")
+            {
+                itemName = typeLine;
+            }
+            else
+            {
+                itemName = name;
+            }
+        }
+        public void SetStackSize()
+        {
+            if (stackSize == 0)
+            {
+                stackSize = 1;
             }
         }
     }
