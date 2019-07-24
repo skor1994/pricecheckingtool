@@ -15,7 +15,7 @@ namespace pricecheckingtool.ViewModels
     {
         private readonly User user = App.user;
         private readonly PriceLists priceLists = new PriceLists();
-        public StashInventory stashInventory = new StashInventory();
+        public StashTab stashInventory = new StashTab();
         private StashTabs stashTabs = new StashTabs();
         public StashTab stashTab = new StashTab();
         public ICommand command;
@@ -79,7 +79,7 @@ namespace pricecheckingtool.ViewModels
 
             string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user._accountName}&tabIndex={stashTab.i}";
             var responseString = await httpClient.GetStringAsync(link);
-            stashInventory = new JavaScriptSerializer().Deserialize<StashInventory>(responseString);
+            stashInventory = new JavaScriptSerializer().Deserialize<StashTab>(responseString);
 
             foreach(Item item in stashInventory.items)
             {
