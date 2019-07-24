@@ -14,14 +14,8 @@ namespace pricecheckingtool.ViewModels
     public sealed class UserViewModel : ViewModelBase
     {
         private readonly User user = App.user;
-        public ObservableCollection<Item> items { get; set; }
         public ICommand command;
-
-        public UserViewModel()
-        {
-            items = new ObservableCollection<Item>();
-        }
-
+        
         public string AccountName
         {
             get { return user._accountName; }
@@ -31,6 +25,7 @@ namespace pricecheckingtool.ViewModels
                 RaisePropertyChanged();
             }
         }
+
         public string SessionID
         {
             get { return user._sessionID; }
@@ -40,6 +35,7 @@ namespace pricecheckingtool.ViewModels
                 RaisePropertyChanged();
             }
         }
+
         public string League
         {
             get
@@ -52,17 +48,7 @@ namespace pricecheckingtool.ViewModels
                 RaisePropertyChanged();
             }
         }
-
-        public ObservableCollection<Item> Items
-        {
-            get { return items; }
-            set
-            {
-                items = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        
         public ICommand LoadDataCommand
         {
             get
