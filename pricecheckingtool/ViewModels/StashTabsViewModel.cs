@@ -69,7 +69,7 @@ namespace pricecheckingtool.ViewModels
         {
             HttpClient httpClient = GetClient();
 
-            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user._accountName}&tabs=1";
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user._league}&accountName={user._accountName}&tabs=1";
             var responseString = await httpClient.GetStringAsync(link);
             stashTabs = new JavaScriptSerializer().Deserialize<StashTabs>(responseString);
 
