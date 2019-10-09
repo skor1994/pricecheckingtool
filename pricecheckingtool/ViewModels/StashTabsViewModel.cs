@@ -54,7 +54,7 @@ namespace pricecheckingtool.ViewModels
             }
         }
 
-        public async void GetStashTabs()
+        public HttpClient GetClient()
         {
             CookieContainer cookieContainer = new CookieContainer();
             cookieContainer.Add(user.GetCookie());
@@ -62,7 +62,14 @@ namespace pricecheckingtool.ViewModels
             httpClientHandler.CookieContainer = cookieContainer;
             HttpClient httpClient = new HttpClient(httpClientHandler);
 
-            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user._league}&accountName={user._accountName}&tabs=1";
+            return httpClient;
+        }
+
+        public async void GetStashTabs()
+        {
+            HttpClient httpClient = GetClient();
+
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league=legion&accountName={user._accountName}&tabs=1";
             var responseString = await httpClient.GetStringAsync(link);
             stashTabs = new JavaScriptSerializer().Deserialize<StashTabs>(responseString);
 
@@ -71,11 +78,7 @@ namespace pricecheckingtool.ViewModels
 
         public async void GetItems()
         {
-            CookieContainer cookieContainer = new CookieContainer();
-            cookieContainer.Add(user.GetCookie());
-            HttpClientHandler httpClientHandler = new HttpClientHandler();
-            httpClientHandler.CookieContainer = cookieContainer;
-            HttpClient httpClient = new HttpClient(httpClientHandler);
+            HttpClient httpClient = GetClient();
 
             string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user._league}&accountName={user._accountName}&tabIndex={stashTab.i}";
             var responseString = await httpClient.GetStringAsync(link);
