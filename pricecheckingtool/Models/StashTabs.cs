@@ -10,6 +10,11 @@ namespace pricecheckingtool
     public class StashTabs
     {
         public string numTabs { get; set; }
-        public ObservableCollection<StashTab> tabs { get; set; } = new ObservableCollection<StashTab>();
+        public ObservableCollection<StashTab> tabs { get; set; }
+
+        public StashTabs()
+        {
+            tabs = new ObservableCollection<StashTab>();
+        }
     }
 }

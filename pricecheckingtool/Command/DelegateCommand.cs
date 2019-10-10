@@ -9,14 +9,14 @@ namespace pricecheckingtool.ViewModels
 {
     public class DelegateCommand : ICommand
     {
-        private Action execute;
-        private Predicate<object> canExecute;
+        private readonly Action execute;
+        private readonly Predicate<object> canExecute;
 
         public event EventHandler CanExecuteChanged;
 
         public DelegateCommand(Action action)
         {
-            this.execute = action;
+            execute = action;
         }
 
         public DelegateCommand(Action execute, Predicate<object> canExecute)

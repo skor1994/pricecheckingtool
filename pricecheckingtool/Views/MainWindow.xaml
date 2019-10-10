@@ -3,17 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Views="clr-namespace:pricecheckingtool.Views"
         xmlns:ViewModels="clr-namespace:pricecheckingtool.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Overview" Height="600" Width="800">
+        Title="Overview" Height="600" Width="800"
+        d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoginCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <StackPanel>
-            <Views:UserView Margin="5"/>
-            <DockPanel Margin="5" Height="450">
-                <Views:StashTabsView Width="750"/>
+            <DockPanel MaxHeight="25" Margin="5">
+                <TextBox Width="225" Text="{Binding SessionID, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Width="225" Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Width="225" Text="{Binding League, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Width="100" Command="{Binding SaveDataCommand}">Ok</Button>
             </DockPanel>
+
+            <DockPanel Margin="5" Height="450">
+                <Grid>
+                    <ListView HorizontalAlignment="Left" Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD" SelectedItem="{Binding selectedStashTab}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="StashTabName" Width="100" DisplayMemberBinding="{Binding n}"/>
+                                <GridViewColumn Header="StashTabType" Width="100" DisplayMemberBinding="{Binding type}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView HorizontalAlignment="Right" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding itemName}"/>
+                                <GridViewColumn Header="StackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
+                                <GridViewColumn Header="SingleValue" Width="125" DisplayMemberBinding="{Binding singleValue}"/>
+                                <GridViewColumn Header="Value" Width="125" DisplayMemberBinding="{Binding value}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </DockPanel>
+            <Button Width="100"  HorizontalAlignment="Left" Margin="50,5" Command="{Binding LoadStashTabsCommand}">Load StashTabs</Button>
         </StackPanel>
     </Grid>
    

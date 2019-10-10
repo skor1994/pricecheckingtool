@@ -20,17 +20,15 @@ namespace pricecheckingtool
         public double value { get; set; }
         public string itemName { get; set; }
         public bool identified { get; set; }
-        List<string> explicitMods { get; set; }
-        List<string> implicitMods { get; set; }
         public int ilvl { get; set; }
         public int stackSize { get; set; }
         public string typeLine { get; set; }
         public int frameType { get; set; }
         public string id { get; set; }
 
-        public void checkPrice()
+        public void checkPrice(PriceLists priceLists)
         {
-            foreach(List<Item> item in PriceLists.prices)
+            foreach(List<Item> item in priceLists.prices)
             {
                 if (frameType != 3)
                 {

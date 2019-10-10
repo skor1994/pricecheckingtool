@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using pricecheckingtool.Provider;
 
 namespace pricecheckingtool
 {
@@ -12,19 +13,12 @@ namespace pricecheckingtool
 
     public sealed class PriceLists
     {
-        private static readonly HttpClient client = new HttpClient();
+        public List<List<Item>> prices { get; set; }
 
-        public static List<List<Item>> prices = new List<List<Item>>();
-
-        public async void GetPrices()
+        public PriceLists()
         {
-            foreach (Category category in Enum.GetValues(typeof(Category)))
-            {
-                string link = $"https://api.poe.watch/get?league=Legion&category={category}";
-                var responseString = await client.GetStringAsync(link);
-
-                prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));          
-            }
+            prices = new List<List<Item>>();
         }
+
     }
 }

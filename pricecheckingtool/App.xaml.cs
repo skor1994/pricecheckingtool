@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using pricecheckingtool.Provider;
 
 namespace pricecheckingtool
 {
@@ -13,6 +14,6 @@ namespace pricecheckingtool
     /// </summary>
     public partial class App : Application
     {
-        public static User user = new User();
+
     }
 }

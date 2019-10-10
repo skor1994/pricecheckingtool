@@ -20,11 +20,11 @@ namespace pricecheckingtool
         public string id { get; set; }
         public bool hidden { get; set; }
         public bool selected { get; set; }
-        public ObservableCollection<Item> items { get; set; } = new ObservableCollection<Item>();
+        public ObservableCollection<Item> items { get; set; }
 
         public StashTab()
         {
-
+            items = new ObservableCollection<Item>();
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Web.Script.Serialization;
+using pricecheckingtool.ViewModels;
 
 namespace pricecheckingtool
 {
@@ -23,9 +24,12 @@ namespace pricecheckingtool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MainViewModel mainViewModel = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = mainViewModel;
         }
     }
 }
