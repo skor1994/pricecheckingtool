@@ -66,9 +66,9 @@ namespace pricecheckingtool
                 }
             }
         }
-        public void SetItemName()
+        public void NormalizeItemName()
         {
-            if(name == null || name == "")
+            if (name == null || name == "")
             {
                 itemName = typeLine;
             }
@@ -77,7 +77,7 @@ namespace pricecheckingtool
                 itemName = name;
             }
         }
-        public void SetStackSize()
+        public void NormalizeStackSize()
         {
             if (stackSize == 0)
             {

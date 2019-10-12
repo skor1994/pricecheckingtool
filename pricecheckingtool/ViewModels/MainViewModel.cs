@@ -88,7 +88,7 @@ namespace pricecheckingtool.ViewModels
         {
             get
             {
-                return sortCommand ?? (sortCommand = new DelegateCommand((param) => Sort(param)));
+                return sortCommand ?? (sortCommand = new DelegateCommand((param) => Sort(param), canExecute => stashItemsCollection != null));
             }
         }
 
@@ -119,9 +119,7 @@ namespace pricecheckingtool.ViewModels
 
             if (sortColumn == column)
             {
-                listSortDirection = listSortDirection == ListSortDirection.Ascending ?
-                                                   ListSortDirection.Descending :
-                                                   ListSortDirection.Ascending;
+                listSortDirection = listSortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             }
             else
             {
@@ -132,7 +130,7 @@ namespace pricecheckingtool.ViewModels
             stashItemsCollection.SortDescriptions.Clear();
             stashItemsCollection.SortDescriptions.Add(new SortDescription(sortColumn, listSortDirection));
 
-             RaisePropertyChanged("Items");
+            RaiseEvents("Items");
         }
 
         private async Task<StashTabs> FetchStashTabsData()
@@ -172,6 +170,37 @@ namespace pricecheckingtool.ViewModels
             return priceLists;
         }
 
+        private async void GetItems()
+        {
+
+            StashTab stashTab = await FetchStashItems();
+
+            foreach (Item item in stashTab.items)
+            {
+                item.NormalizeItemName();
+                item.NormalizeStackSize();
+                item.checkPrice(priceLists);
+            }
+
+            stashItemsCollection = new ListCollectionView(stashTab.items);
+            RaiseEvents("Items");
+        }
+
+        private async Task<StashTab> FetchStashItems()
+        {
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabIndex={stashTab.i}";
+
+            try
+            {
+                var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
+                return new JavaScriptSerializer().Deserialize<StashTab>(responseString);
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
+        }
+
         private void RaiseEvents(string type)
         {
             switch (type)
@@ -200,23 +229,6 @@ namespace pricecheckingtool.ViewModels
                 return true;
             else
                 return false;
-        }
-
-        private async void GetItems()
-        {
-            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabIndex={stashTab.i}";
-            var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
-            stashTab = new JavaScriptSerializer().Deserialize<StashTab>(responseString);
-
-            foreach (Item item in stashTab.items)
-            {
-                item.SetItemName();
-                item.SetStackSize();
-                item.checkPrice(priceLists);
-            }
-
-            stashItemsCollection = new ListCollectionView(stashTab.items);
-            RaisePropertyChanged("Items");
         }
     }
 }

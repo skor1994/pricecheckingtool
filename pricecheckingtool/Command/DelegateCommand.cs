@@ -12,7 +12,23 @@ namespace pricecheckingtool.ViewModels
         private readonly Action<object> action;
         private readonly Predicate<object> canExecute;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChangedInternal;
+
+
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+                this.CanExecuteChangedInternal += value;
+            }
+
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+                this.CanExecuteChangedInternal -= value;
+            }
+        }
 
         public DelegateCommand(Action<object> action)
         {
@@ -36,7 +52,7 @@ namespace pricecheckingtool.ViewModels
         }
         public void OnCanExecuteChanged()
         {
-            CanExecuteChanged(this, EventArgs.Empty);
+            CanExecuteChangedInternal.Invoke(this, EventArgs.Empty);
         }
     }
 }
