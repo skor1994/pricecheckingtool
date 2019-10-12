@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Web.Script.Serialization;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace pricecheckingtool.ViewModels
@@ -16,12 +18,14 @@ namespace pricecheckingtool.ViewModels
     {
         private User user;
         private Webservice webservice;
-        private ICommand loadStashTabsCommand;
         private ICommand saveDataCommand;
         private ICommand loginCommand;
+        private ICommand sortCommand;
         private StashTab stashTab;
         private PriceLists priceLists;
-        private Timer timerPriceLists;
+        private string sortColumn;
+        private ListSortDirection listSortDirection;
+        private ListCollectionView stashItemsCollection;
 
         public string AccountName
         {
@@ -46,9 +50,10 @@ namespace pricecheckingtool.ViewModels
             get { return user.stashTabs.tabs; }
         }
 
-        public ObservableCollection<Item> Items
+        public ListCollectionView Items
         {
-            get { return stashTab.items; }
+            get { return stashItemsCollection; }
+            set { stashItemsCollection = value; RaisePropertyChanged(); }
         }
 
         public StashTab selectedStashTab
@@ -61,15 +66,13 @@ namespace pricecheckingtool.ViewModels
         {
             user = new User();
             stashTab = new StashTab();
-            priceLists = new PriceLists();
-            SetupTimerPriceLists();
         }
 
         public ICommand LoginCommand
         {
             get
             {
-                return loginCommand ?? (loginCommand = new DelegateCommand(() => Login(), canExecute => (DataFileExistsAndIsNotEmpty() == true)));
+                return loginCommand ?? (loginCommand = new DelegateCommand((param) => Login(), canExecute => (DataFileExistsAndIsNotEmpty() == true)));
             }
         }
 
@@ -77,48 +80,119 @@ namespace pricecheckingtool.ViewModels
         {
             get
             {
-                return saveDataCommand ?? (saveDataCommand = new DelegateCommand(() => SaveAndLogin(), canExecute => (AccountName != null && SessionID != null && League != null)));
+                return saveDataCommand ?? (saveDataCommand = new DelegateCommand((param) => SaveAndLogin(), canExecute => (AccountName != null && SessionID != null && League != null)));
             }
         }
 
-        public ICommand LoadStashTabsCommand
+        public ICommand SortCommand
         {
             get
             {
-                return loadStashTabsCommand ?? (loadStashTabsCommand = new DelegateCommand(() => LoadStashTabs(), canExecute => user != null));
+                return sortCommand ?? (sortCommand = new DelegateCommand((param) => Sort(param)));
             }
         }
-        
-        public void Login()
+
+        private void Login()
         {
             user.LoadDataFromFile();
             webservice = new Webservice(user.sessionID);
-            RaiseEvents();
+            RaiseEvents("");
+            FetchData();
         }
 
-        public void SaveAndLogin()
+        private void SaveAndLogin()
         {
             user.CreateDataFile();
-            webservice = new Webservice(user.sessionID);
-            RaiseEvents();
+            Login();
         }
 
-        public void RaiseEvents()
+        private async void FetchData()
         {
-            RaisePropertyChanged("AccountName");
-            RaisePropertyChanged("SessionID");
-            RaisePropertyChanged("League");
+            priceLists = await FetchPriceListsData();
+            user.stashTabs = await FetchStashTabsData();
+            RaiseEvents("StashTabs");      
         }
-        
-        public async void LoadStashTabs()
+
+        private void Sort(object parameter)
+        {
+            string column = parameter as string;
+
+            if (sortColumn == column)
+            {
+                listSortDirection = listSortDirection == ListSortDirection.Ascending ?
+                                                   ListSortDirection.Descending :
+                                                   ListSortDirection.Ascending;
+            }
+            else
+            {
+                sortColumn = column;
+                listSortDirection = ListSortDirection.Ascending;
+            }
+
+            stashItemsCollection.SortDescriptions.Clear();
+            stashItemsCollection.SortDescriptions.Add(new SortDescription(sortColumn, listSortDirection));
+
+             RaisePropertyChanged("Items");
+        }
+
+        private async Task<StashTabs> FetchStashTabsData()
         {
             string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabs=1";
-            var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
-            user.stashTabs = new JavaScriptSerializer().Deserialize<StashTabs>(responseString);
-            RaisePropertyChanged("StashTabs");
+
+            try
+            {
+                var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
+                return new JavaScriptSerializer().Deserialize<StashTabs>(responseString); 
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
         }
 
-        public bool DataFileExistsAndIsNotEmpty()
+        private async Task<PriceLists> FetchPriceListsData()
+        {
+            PriceLists priceLists = new PriceLists();
+
+            foreach (Category category in Enum.GetValues(typeof(Category)))
+            {
+                string link = $"https://api.poe.watch/get?league={user.league}&category={category}";
+
+                try
+                {
+                    var responseString = await webservice.httpClient.GetStringAsync(link);
+                    priceLists.prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));
+                }
+                catch (HttpRequestException e)
+                {
+                    throw e;
+                }
+            }
+
+            return priceLists;
+        }
+
+        private void RaiseEvents(string type)
+        {
+            switch (type)
+            {
+                case "StashTabs":
+                    RaisePropertyChanged("StashTabs");
+                    break;
+
+                case "Items":
+                    RaisePropertyChanged("Items");
+                    break;
+
+                default:
+                    RaisePropertyChanged("AccountName");
+                    RaisePropertyChanged("SessionID");
+                    RaisePropertyChanged("League");
+                    break;
+            }
+        }
+
+        private bool DataFileExistsAndIsNotEmpty()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "user.txt";
 
@@ -128,20 +202,7 @@ namespace pricecheckingtool.ViewModels
                 return false;
         }
 
-        private void SetupTimerPriceLists()
-        {
-            timerPriceLists = new Timer();
-            timerPriceLists.Interval = 1800000;
-            timerPriceLists.Elapsed += OnTimeElapsedPriceLists;
-            timerPriceLists.Start();
-        }
-
-        private void OnTimeElapsedPriceLists(object sender, ElapsedEventArgs elapsedEventArgs)
-        {
-            FetchPrices();
-        }
-
-        public async void GetItems()
+        private async void GetItems()
         {
             string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabIndex={stashTab.i}";
             var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
@@ -154,18 +215,8 @@ namespace pricecheckingtool.ViewModels
                 item.checkPrice(priceLists);
             }
 
+            stashItemsCollection = new ListCollectionView(stashTab.items);
             RaisePropertyChanged("Items");
-        }
-
-        public async void FetchPrices()
-        {
-            foreach (Category category in Enum.GetValues(typeof(Category)))
-            {
-                string link = $"https://api.poe.watch/get?league={user.league}&category={category}";
-                var responseString = await webservice.httpClient.GetStringAsync(link);
-
-                priceLists.prices.Add(new JavaScriptSerializer().Deserialize<List<Item>>(responseString));
-            }
         }
     }
 }

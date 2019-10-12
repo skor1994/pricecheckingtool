@@ -14,9 +14,9 @@ namespace pricecheckingtool.Provider
 {
     public sealed class Webservice
     {
-        private string sessionID { get; }
-        public HttpClient httpClient { get; set; }
-        public HttpClient httpClientWithCookie { get; set; }
+        private string sessionID { get; set; }
+        public HttpClient httpClient { get; private set; }
+        public HttpClient httpClientWithCookie { get; private set; }
 
         public Webservice(string sessionID)
         {

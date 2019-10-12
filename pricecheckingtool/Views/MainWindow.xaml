@@ -37,16 +37,23 @@
                     <ListView HorizontalAlignment="Right" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="ItemName" Width="125" DisplayMemberBinding="{Binding itemName}"/>
-                                <GridViewColumn Header="StackSize" Width="125" DisplayMemberBinding="{Binding stackSize}"/>
-                                <GridViewColumn Header="SingleValue" Width="125" DisplayMemberBinding="{Binding singleValue}"/>
-                                <GridViewColumn Header="Value" Width="125" DisplayMemberBinding="{Binding value}"/>
+                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding itemName}">
+                                    <GridViewColumnHeader Content="ItemName" Command="{Binding SortCommand}" CommandParameter="itemName"/>
+                                </GridViewColumn>
+                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding stackSize}">
+                                    <GridViewColumnHeader Content="StackSize" Command="{Binding SortCommand}" CommandParameter="stackSize"/>
+                                </GridViewColumn>
+                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding singleValue}">
+                                    <GridViewColumnHeader Content="SingleValue" Command="{Binding SortCommand}" CommandParameter="singleValue"/>
+                                </GridViewColumn>
+                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding value}">
+                                    <GridViewColumnHeader Content="Value" Command="{Binding SortCommand}" CommandParameter="value"/>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </Grid>
             </DockPanel>
-            <Button Width="100"  HorizontalAlignment="Left" Margin="50,5" Command="{Binding LoadStashTabsCommand}">Load StashTabs</Button>
         </StackPanel>
     </Grid>
    
