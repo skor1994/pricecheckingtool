@@ -119,12 +119,12 @@ namespace pricecheckingtool.ViewModels
 
             if (sortColumn == column)
             {
-                listSortDirection = listSortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                listSortDirection = listSortDirection == ListSortDirection.Descending ? ListSortDirection.Ascending : ListSortDirection.Descending;
             }
             else
             {
                 sortColumn = column;
-                listSortDirection = ListSortDirection.Ascending;
+                listSortDirection = ListSortDirection.Descending;
             }
 
             stashItemsCollection.SortDescriptions.Clear();

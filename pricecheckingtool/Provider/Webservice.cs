@@ -40,7 +40,7 @@ namespace pricecheckingtool.Provider
             return cookie;
         }
 
-        // For Interactions with the PoE Ingame-API
+        // For Interactions with the Path of Exile API
         private HttpClient ModifyHttpClient()
         {
             CookieContainer cookieContainer = new CookieContainer();

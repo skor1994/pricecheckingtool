@@ -26,6 +26,11 @@ namespace pricecheckingtool
         public int frameType { get; set; }
         public string id { get; set; }
 
+        public Item()
+        {
+
+        }
+
         public void checkPrice(PriceLists priceLists)
         {
             foreach(List<Item> item in priceLists.prices)
