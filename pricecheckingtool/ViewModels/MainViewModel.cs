@@ -53,7 +53,6 @@ namespace pricecheckingtool.ViewModels
         public ListCollectionView Items
         {
             get { return stashItemsCollection; }
-            set { stashItemsCollection = value; RaisePropertyChanged(); }
         }
 
         public StashTab selectedStashTab
