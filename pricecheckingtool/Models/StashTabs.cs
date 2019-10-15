@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace pricecheckingtool
 {
-    public class StashTabs
+    public sealed class StashTabs
     {
         public string numTabs { get; set; }
         public ObservableCollection<StashTab> tabs { get; set; }

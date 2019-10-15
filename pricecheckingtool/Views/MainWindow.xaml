@@ -6,7 +6,7 @@
         xmlns:ViewModels="clr-namespace:pricecheckingtool.ViewModels"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Overview" Height="600" Width="800"
+        Title="Overview" Height="550" Width="1000"
         d:DataContext="{d:DesignInstance ViewModels:MainViewModel}">
 
     <i:Interaction.Triggers>
@@ -17,14 +17,14 @@
     
     <Grid>
         <StackPanel>
-            <DockPanel MaxHeight="25" Margin="5">
+            <DockPanel MaxHeight="25" Margin="5" HorizontalAlignment="Center">
                 <TextBox Width="225" Text="{Binding SessionID, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox Width="225" Text="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox Width="225" Text="{Binding League, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Width="100" Command="{Binding SaveDataCommand}">Ok</Button>
             </DockPanel>
 
-            <DockPanel Margin="5" Height="450">
+            <DockPanel Margin="10" Height="450">
                 <Grid>
                     <ListView HorizontalAlignment="Left" Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD" SelectedItem="{Binding selectedStashTab}">
                         <ListView.View>
@@ -34,7 +34,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView HorizontalAlignment="Right" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
+                    <ListView HorizontalAlignment="Center" ItemsSource="{Binding Items}" Background="#FFFDFDFD">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="125" DisplayMemberBinding="{Binding itemName}">
@@ -43,12 +43,20 @@
                                 <GridViewColumn Width="125" DisplayMemberBinding="{Binding stackSize}">
                                     <GridViewColumnHeader Content="StackSize" Command="{Binding SortCommand}" CommandParameter="stackSize"/>
                                 </GridViewColumn>
-                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding singleValue}">
+                                <GridViewColumn Width="100" DisplayMemberBinding="{Binding singleValue}">
                                     <GridViewColumnHeader Content="SingleValue" Command="{Binding SortCommand}" CommandParameter="singleValue"/>
                                 </GridViewColumn>
-                                <GridViewColumn Width="125" DisplayMemberBinding="{Binding value}">
+                                <GridViewColumn Width="100" DisplayMemberBinding="{Binding value}">
                                     <GridViewColumnHeader Content="Value" Command="{Binding SortCommand}" CommandParameter="value"/>
                                 </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView HorizontalAlignment="Right" ItemsSource="{Binding Parties}" Background="#FFFDFDFD" SelectedItem="{Binding selectedParty}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="PartyName" Width="100" DisplayMemberBinding="{Binding name}"/>
+                                <GridViewColumn Header="PartyId" Width="100" DisplayMemberBinding="{Binding partyId}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

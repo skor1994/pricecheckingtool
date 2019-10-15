@@ -22,6 +22,7 @@ namespace pricecheckingtool.ViewModels
         private ICommand loginCommand;
         private ICommand sortCommand;
         private StashTab stashTab;
+        private Party party;
         private PriceLists priceLists;
         private string sortColumn;
         private ListSortDirection listSortDirection;
@@ -29,8 +30,8 @@ namespace pricecheckingtool.ViewModels
 
         public string AccountName
         {
-            get { return user.accountName; }
-            set { user.accountName = value; RaisePropertyChanged(); }
+            get { return user.name; }
+            set { user.name = value; RaisePropertyChanged(); }
         }
 
         public string SessionID
@@ -45,6 +46,11 @@ namespace pricecheckingtool.ViewModels
             set { user.league = value; RaisePropertyChanged(); }
         }
 
+        public ObservableCollection<Party> Parties
+        {
+            get { return user.parties; }
+        }
+
         public ObservableCollection<StashTab> StashTabs
         {
             get { return user.stashTabs.tabs; }
@@ -53,6 +59,17 @@ namespace pricecheckingtool.ViewModels
         public ListCollectionView Items
         {
             get { return stashItemsCollection; }
+        }
+
+        public Party selectedParty
+        {
+            get { return party; }
+            set { party = value; GetPartyMember(); RaisePropertyChanged(); }
+        }
+
+        public ObservableCollection<User> UserList
+        {
+            get { return selectedParty.users; }
         }
 
         public StashTab selectedStashTab
@@ -109,7 +126,9 @@ namespace pricecheckingtool.ViewModels
         {
             priceLists = await FetchPriceListsData();
             user.stashTabs = await FetchStashTabsData();
-            RaiseEvents("StashTabs");      
+            RaiseEvents("StashTabs");
+            user.parties = await FetchParties(user.userId);
+            RaiseEvents("Parties");
         }
 
         private void Sort(object parameter)
@@ -134,7 +153,7 @@ namespace pricecheckingtool.ViewModels
 
         private async Task<StashTabs> FetchStashTabsData()
         {
-            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabs=1";
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.name}&tabs=1";
 
             try
             {
@@ -185,14 +204,50 @@ namespace pricecheckingtool.ViewModels
             RaiseEvents("Items");
         }
 
+        private async void GetPartyMember()
+        {
+            Party party = new Party();
+            party.users = await FetchPartyMember();
+            RaiseEvents("UserList");
+        }
+
         private async Task<StashTab> FetchStashItems()
         {
-            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.accountName}&tabIndex={stashTab.i}";
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league={user.league}&accountName={user.name}&tabIndex={stashTab.i}";
 
             try
             {
                 var responseString = await webservice.httpClientWithCookie.GetStringAsync(link);
                 return new JavaScriptSerializer().Deserialize<StashTab>(responseString);
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        private async Task<ObservableCollection<Party>> FetchParties(int userId)
+        {
+            string link = $"http://localhost:64797/parties/getmyparties/{userId}";
+
+            try
+            {
+                var responseString = await webservice.httpClient.GetStringAsync(link);
+                return new JavaScriptSerializer().Deserialize<ObservableCollection<Party>>(responseString);
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
+        }
+        private async Task<ObservableCollection<User>> FetchPartyMember()
+        {
+            string link = $"http://localhost:64797/parties/getuserfrom/{selectedParty.partyId}";
+
+            try
+            {
+                var responseString = await webservice.httpClient.GetStringAsync(link);
+                return new JavaScriptSerializer().Deserialize<ObservableCollection<User>>(responseString);
             }
             catch (HttpRequestException e)
             {
@@ -210,6 +265,10 @@ namespace pricecheckingtool.ViewModels
 
                 case "Items":
                     RaisePropertyChanged("Items");
+                    break;
+
+                case "Parties":
+                    RaisePropertyChanged("Parties");
                     break;
 
                 default:

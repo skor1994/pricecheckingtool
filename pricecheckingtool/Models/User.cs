@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -9,13 +10,16 @@ namespace pricecheckingtool
     public sealed class User
     {
         public string sessionID { get; set; }
-        public string accountName { get; set; }
+        public string name { get; set; }
         public string league { get; set; }
         public StashTabs stashTabs { get; set; }
+        public int userId { get; set; }
+        public ObservableCollection<Party> parties { get; set; }
 
         public User()
         {
             stashTabs = new StashTabs();
+            parties = new ObservableCollection<Party>();
         }
 
         public void LoadDataFromFile()
@@ -27,7 +31,7 @@ namespace pricecheckingtool
                 if (line.Contains("sessionID"))
                     sessionID = line.Remove(0, 10);
                 if (line.Contains("accName"))
-                    accountName = line.Remove(0, 8);
+                    name = line.Remove(0, 8);
                 if (line.Contains("league"))
                     league = line.Remove(0, 7);
             }
@@ -42,7 +46,7 @@ namespace pricecheckingtool
             using (TextWriter tw = new StreamWriter(path))
             {
                 tw.WriteLine($"sessionID:{sessionID}");
-                tw.WriteLine($"accName:{accountName}");
+                tw.WriteLine($"accName:{name}");
                 tw.WriteLine($"league:{league}");
                 tw.Close();
             }

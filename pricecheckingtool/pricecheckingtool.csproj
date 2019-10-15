@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Models\Party.cs" />
     <Compile Include="Models\StashTabs.cs" />
     <Compile Include="Provider\Webservice.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
