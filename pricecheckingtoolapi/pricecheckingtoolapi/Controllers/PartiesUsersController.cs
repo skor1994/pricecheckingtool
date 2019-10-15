@@ -32,14 +32,14 @@ namespace pricecheckingtoolapi.Controllers
             return partyUser;
         }
 
-        [HttpPost("create/{userId},{name}")]
-        public async Task<ActionResult<PartyUser>> CreateParty(int userId, string name)
+        [HttpPost("create/{userId},{partyName}")]
+        public async Task<ActionResult<PartyUser>> CreateParty(int userId, string partyName)
         {
             PartyUser partyUser = new PartyUser();
             partyUser.userId = userId;
             partyUser.party = new Party()
             {
-                name = name
+                name = partyName
             };
             
             databaseContext.PartyUser.Add(partyUser);

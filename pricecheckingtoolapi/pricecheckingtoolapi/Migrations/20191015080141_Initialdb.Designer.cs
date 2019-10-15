@@ -8,8 +8,8 @@ using pricecheckingtoolapi.Db;
 namespace pricecheckingtoolapi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20191014175809_initialDB")]
-    partial class initialDB
+    [Migration("20191015080141_Initialdb")]
+    partial class Initialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

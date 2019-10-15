@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace pricecheckingtoolapi.Migrations
 {
-    public partial class initialDB : Migration
+    public partial class Initialdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

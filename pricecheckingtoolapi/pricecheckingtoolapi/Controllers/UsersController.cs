@@ -20,13 +20,13 @@ namespace pricecheckingtoolapi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<User> GetSingleUser(int id)
+        public async Task<ActionResult<User>> GetSingleUser(int id)
         {
             var user = await databaseContext.Users.FindAsync(id);
 
             if (user == null)
             {
-                //return NotFound();
+                return NotFound();
             }
 
             return user;
