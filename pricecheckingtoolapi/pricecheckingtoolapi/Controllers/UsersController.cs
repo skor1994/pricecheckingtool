@@ -19,13 +19,7 @@ namespace pricecheckingtoolapi.Controllers
         {
             this.databaseContext = databaseContext;
         }
-        
-        [HttpGet("getall")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
-        {
-            return await databaseContext.Users.ToListAsync(); ;
-        }
-        
+                
         [HttpPost("auth/{username},{password}")]
         public async Task<ActionResult<int>> Authenticate(string username, string password)
         {
@@ -40,11 +34,11 @@ namespace pricecheckingtoolapi.Controllers
             if (!VerifyPasswordHash(password, user.passwordHash, user.passwordSalt))
                 return null;
 
-            return user.userId;
+            return Ok(user.userId);
         }
 
         [HttpPost("auth/create/{username},{password}")]
-        public async Task<ActionResult<User>> Create(string username, string password)
+        public async Task<ActionResult<int>> Create(string username, string password)
         {            
             if (string.IsNullOrWhiteSpace(username) ||string.IsNullOrWhiteSpace(password))
                 return BadRequest();
@@ -64,7 +58,7 @@ namespace pricecheckingtoolapi.Controllers
             databaseContext.Users.Add(user);
             databaseContext.SaveChanges();
 
-            return user;
+            return Ok(user.userId);
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -19,25 +19,6 @@ namespace pricecheckingtoolapi.Controllers
             this.databaseContext = databaseContext;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Party>> GetSingleParty(int id)
-        {
-            var party = await databaseContext.Partys.FindAsync(id);
-
-            if (party == null)
-            {
-                return NotFound();
-            }
-
-            return party;
-        }
-
-        [HttpGet("getall")]
-        public async Task<ActionResult<IEnumerable<Party>>> GetAll()
-        {
-            return await databaseContext.Partys.ToListAsync(); ;
-        }
-
         [HttpGet("getmyparties/{userId}")]
         public IQueryable<Party> GetAllPartiesById(int userId)
         {
