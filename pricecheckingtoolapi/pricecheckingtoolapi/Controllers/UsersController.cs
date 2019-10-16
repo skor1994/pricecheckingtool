@@ -24,7 +24,7 @@ namespace pricecheckingtoolapi.Controllers
         [HttpPost("auth/login")]
         public IActionResult Authenticate([FromForm] UserDto userparam)
         {
-            if (string.IsNullOrWhiteSpace(userparam.name))
+            if (string.IsNullOrWhiteSpace(userparam.name) || string.IsNullOrWhiteSpace(userparam.password))
                 return BadRequest();
 
             var user = databaseContext.Users.SingleOrDefault(x => x.name == userparam.name);

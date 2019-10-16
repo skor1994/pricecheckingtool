@@ -29,7 +29,7 @@ namespace pricecheckingtoolapi.Controllers
             databaseContext.PartyUser.Add(partyUser);
             await databaseContext.SaveChangesAsync();
 
-            return Ok();
+            return Ok($"Successfully joined party with ID: {partyUser.party.partyId}");
         }
 
         [HttpPost("create/{userId},{name}")]
@@ -45,7 +45,7 @@ namespace pricecheckingtoolapi.Controllers
             databaseContext.PartyUser.Add(partyUser);
             await databaseContext.SaveChangesAsync();
             
-            return Ok();
+            return Ok($"Successfully created party with name: {partyUser.party.name}");
         }
     }
 }
