@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using pricecheckingtoolapi.Db;
 using pricecheckingtoolapi.Models;
+using pricecheckingtoolapi.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,51 +21,53 @@ namespace pricecheckingtoolapi.Controllers
             this.databaseContext = databaseContext;
         }
         
-        [HttpGet("getall")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        [HttpPost("auth/login")]
+        public IActionResult Authenticate([FromForm] UserDto userparam)
         {
-            return await databaseContext.Users.ToListAsync(); ;
-        }
-        
-        [HttpPost("auth/{username},{password}")]
-        public async Task<ActionResult<int>> Authenticate(string username, string password)
-        {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(userparam.name))
                 return BadRequest();
 
-            var user = databaseContext.Users.SingleOrDefault(x => x.name == username);
+            var user = databaseContext.Users.SingleOrDefault(x => x.name == userparam.name);
 
             if (user == null)
                 return NotFound();
 
-            if (!VerifyPasswordHash(password, user.passwordHash, user.passwordSalt))
+            if (!VerifyPasswordHash(userparam.password, user.passwordHash, user.passwordSalt))
                 return null;
 
-            return user.userId;
+            return Ok(new User()
+            {
+                name = user.name,
+                userId = user.userId
+            });
         }
 
-        [HttpPost("auth/create/{username},{password}")]
-        public async Task<ActionResult<User>> Create(string username, string password)
+        [HttpPost("auth/create")]
+        public IActionResult Create([FromForm] UserDto userparam)
         {            
-            if (string.IsNullOrWhiteSpace(username) ||string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(userparam.name) ||string.IsNullOrWhiteSpace(userparam.password))
                 return BadRequest();
 
             User user = new User();
 
-            if (databaseContext.Users.Any(x => x.name == username))
+            if (databaseContext.Users.Any(x => x.name == userparam.name))
                 return null;
 
             byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(userparam.password, out passwordHash, out passwordSalt);
 
-            user.name = username;
+            user.name = userparam.name;
             user.passwordHash = passwordHash;
             user.passwordSalt = passwordSalt;
 
             databaseContext.Users.Add(user);
             databaseContext.SaveChanges();
 
-            return user;
+            return Ok(new User()
+            {
+                name = user.name,
+                userId = user.userId
+            });
         }
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -20,7 +20,7 @@ namespace pricecheckingtoolapi.Controllers
         }
 
         [HttpPost("join/{userId},{partyId}")]
-        public async Task<ActionResult<PartyUser>> JoinParty(int userId, int partyId)
+        public async Task<IActionResult> JoinParty(int userId, int partyId)
         {
             PartyUser partyUser = new PartyUser();
             partyUser.userId = userId;
@@ -33,7 +33,7 @@ namespace pricecheckingtoolapi.Controllers
         }
 
         [HttpPost("create/{userId},{name}")]
-        public async Task<ActionResult<PartyUser>> CreateParty(int userId, string name)
+        public async Task<IActionResult> CreateParty(int userId, string name)
         {
             PartyUser partyUser = new PartyUser();
             partyUser.userId = userId;
