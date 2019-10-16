@@ -35,11 +35,7 @@ namespace pricecheckingtoolapi.Controllers
             if (!VerifyPasswordHash(userparam.password, user.passwordHash, user.passwordSalt))
                 return null;
 
-            return Ok(new User()
-            {
-                name = user.name,
-                userId = user.userId
-            });
+            return Ok(user.userId);
         }
 
         [HttpPost("auth/create")]

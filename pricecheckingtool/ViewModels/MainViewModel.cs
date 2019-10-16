@@ -127,8 +127,30 @@ namespace pricecheckingtool.ViewModels
             priceLists = await FetchPriceListsData();
             user.stashTabs = await FetchStashTabsData();
             RaiseEvents("StashTabs");
+            user.userId = await FetchUserId();
             user.parties = await FetchParties(user.userId);
             RaiseEvents("Parties");
+        }
+
+        private async Task<int> FetchUserId()
+        {
+            string link = $"http://localhost:64797/users/auth/login";
+            var param = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("name", user.name),
+                new KeyValuePair<string, string>("password", "12345test"),
+            });
+
+            try
+            {
+                var response = await webservice.httpClient.PostAsync(link, param);
+                var content = await response.Content.ReadAsStringAsync();
+                return Convert.ToInt32(content);
+            }
+            catch (HttpRequestException e)
+            {
+                throw e;
+            }
         }
 
         private void Sort(object parameter)
@@ -240,6 +262,7 @@ namespace pricecheckingtool.ViewModels
                 throw e;
             }
         }
+
         private async Task<ObservableCollection<User>> FetchPartyMember()
         {
             string link = $"http://localhost:64797/parties/getuserfrom/{selectedParty.partyId}";
