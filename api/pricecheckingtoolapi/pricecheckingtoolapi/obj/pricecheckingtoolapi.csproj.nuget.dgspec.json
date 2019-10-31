@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pTham\\Documents\\pricecheckingtool\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj": {}
+    "C:\\Users\\pTham\\Documents\\pricecheckingtool\\api\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pTham\\Documents\\pricecheckingtool\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj": {
+    "C:\\Users\\pTham\\Documents\\pricecheckingtool\\api\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj",
+        "projectUniqueName": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\api\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj",
         "projectName": "pricecheckingtoolapi",
-        "projectPath": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj",
+        "projectPath": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\api\\pricecheckingtoolapi\\pricecheckingtoolapi\\pricecheckingtoolapi.csproj",
         "packagesPath": "C:\\Users\\pTham\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\pricecheckingtoolapi\\pricecheckingtoolapi\\obj\\",
+        "outputPath": "C:\\Users\\pTham\\Documents\\pricecheckingtool\\api\\pricecheckingtoolapi\\pricecheckingtoolapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
