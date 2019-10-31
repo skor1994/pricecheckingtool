@@ -134,11 +134,11 @@ namespace pricecheckingtool.ViewModels
 
         private async Task<int> FetchUserId()
         {
-            string link = $"http://localhost:64797/users/auth/login";
+            string link = $"http://localhost:50058/users/auth/login";
             var param = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("name", user.name),
-                new KeyValuePair<string, string>("password", "12345test"),
+                new KeyValuePair<string, string>("password", "asdasd01"),
             });
 
             try
@@ -250,7 +250,7 @@ namespace pricecheckingtool.ViewModels
 
         private async Task<ObservableCollection<Party>> FetchParties(int userId)
         {
-            string link = $"http://localhost:64797/parties/getmyparties/{userId}";
+            string link = $"http://localhost:50058/parties/getmyparties/{userId}";
 
             try
             {
@@ -265,7 +265,7 @@ namespace pricecheckingtool.ViewModels
 
         private async Task<ObservableCollection<User>> FetchPartyMember()
         {
-            string link = $"http://localhost:64797/parties/getuserfrom/{selectedParty.partyId}";
+            string link = $"http://localhost:50058/parties/getuserfrom/{selectedParty.partyId}";
 
             try
             {

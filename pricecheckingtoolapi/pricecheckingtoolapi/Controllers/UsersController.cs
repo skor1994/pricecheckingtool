@@ -24,7 +24,7 @@ namespace pricecheckingtoolapi.Controllers
         [HttpPost("auth/login")]
         public IActionResult Authenticate([FromForm] UserDto userparam)
         {
-            if (string.IsNullOrWhiteSpace(userparam.name) || string.IsNullOrWhiteSpace(userparam.password))
+            if (string.IsNullOrWhiteSpace(userparam.name) || string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();
 
             var user = databaseContext.Users.SingleOrDefault(x => x.name == userparam.name);
@@ -32,16 +32,13 @@ namespace pricecheckingtoolapi.Controllers
             if (user == null)
                 return NotFound();
 
-            if (!VerifyPasswordHash(userparam.password, user.passwordHash, user.passwordSalt))
-                return null;
-
-            return Ok(user.userId);
+            return Ok();
         }
 
         [HttpPost("auth/create")]
         public IActionResult Create([FromForm] UserDto userparam)
         {            
-            if (string.IsNullOrWhiteSpace(userparam.name) ||string.IsNullOrWhiteSpace(userparam.password))
+            if (string.IsNullOrWhiteSpace(userparam.name) ||string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();
 
             User user = new User();
@@ -49,12 +46,8 @@ namespace pricecheckingtoolapi.Controllers
             if (databaseContext.Users.Any(x => x.name == userparam.name))
                 return null;
 
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(userparam.password, out passwordHash, out passwordSalt);
-
             user.name = userparam.name;
-            user.passwordHash = passwordHash;
-            user.passwordSalt = passwordSalt;
+            user.sessionId = userparam.sessionId;
 
             databaseContext.Users.Add(user);
             databaseContext.SaveChanges();
@@ -64,37 +57,6 @@ namespace pricecheckingtoolapi.Controllers
                 name = user.name,
                 userId = user.userId
             });
-        }
-
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != storedHash[i]) return false;
-                }
-            }
-
-            return true;
         }
     }
 }

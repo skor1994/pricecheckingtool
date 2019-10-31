@@ -17,6 +17,7 @@ namespace pricecheckingtoolapi.Db
         public DbSet<User> Users { get; set; }
         public DbSet<Party> Partys { get; set; }
         public DbSet<PartyUser> PartyUser { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -12,9 +12,9 @@ namespace pricecheckingtoolapi.Models
         public string name { get; set; }
         [Key]
         public int userId { get; set; }
-        public byte[] passwordHash { get; set; }
-        public byte[] passwordSalt { get; set; }
+        public string sessionId { get; set; }
         public List<PartyUser> partyUser { get; set; }
+        public List<Item> items { get; set; }
         
     }
 }

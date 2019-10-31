@@ -24,7 +24,7 @@
                 <Button Width="100" Command="{Binding SaveDataCommand}">Ok</Button>
             </DockPanel>
 
-            <DockPanel Margin="10" Height="450">
+            <DockPanel Margin="5" Height="450">
                 <Grid>
                     <ListView HorizontalAlignment="Left" Name="StashView" ItemsSource="{Binding StashTabs}" Background="#FFFDFDFD" SelectedItem="{Binding selectedStashTab}">
                         <ListView.View>
