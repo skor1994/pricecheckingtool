@@ -10,7 +10,7 @@ namespace pricecheckingtoolapi.Models
         public int partyId { get; set; }
         public Party party { get; set; }
 
-        public int userId { get; set; }
+        public string username { get; set; }
         public User user { get; set; }
     }
 }

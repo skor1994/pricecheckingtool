@@ -19,11 +19,11 @@ namespace pricecheckingtoolapi.Controllers
             this.databaseContext = databaseContext;
         }
 
-        [HttpPost("join/{userId},{partyId}")]
-        public async Task<IActionResult> JoinParty(int userId, int partyId)
+        [HttpPost("join/{username},{partyId}")]
+        public async Task<IActionResult> JoinParty(string username, int partyId)
         {
             PartyUser partyUser = new PartyUser();
-            partyUser.userId = userId;
+            partyUser.username = username;
             partyUser.partyId = partyId;
 
             databaseContext.PartyUser.Add(partyUser);
@@ -32,11 +32,11 @@ namespace pricecheckingtoolapi.Controllers
             return Ok($"Successfully joined party with ID: {partyUser.party.partyId}");
         }
 
-        [HttpPost("create/{userId},{name}")]
-        public async Task<IActionResult> CreateParty(int userId, string name)
+        [HttpPost("create/{username},{name}")]
+        public async Task<IActionResult> CreateParty(string username, string name)
         {
             PartyUser partyUser = new PartyUser();
-            partyUser.userId = userId;
+            partyUser.username = username;
             partyUser.party = new Party()
             {
                 name = name

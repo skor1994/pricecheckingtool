@@ -55,14 +55,12 @@ namespace pricecheckingtoolapi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    userId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(nullable: true),
+                    username = table.Column<string>(maxLength: 35, nullable: false),
                     sessionId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.userId);
+                    table.PrimaryKey("PK_Users", x => x.username);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,11 +68,11 @@ namespace pricecheckingtoolapi.Migrations
                 columns: table => new
                 {
                     partyId = table.Column<int>(nullable: false),
-                    userId = table.Column<int>(nullable: false)
+                    username = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PartyUser", x => new { x.userId, x.partyId });
+                    table.PrimaryKey("PK_PartyUser", x => new { x.username, x.partyId });
                     table.ForeignKey(
                         name: "FK_PartyUser_Partys_partyId",
                         column: x => x.partyId,
@@ -82,10 +80,10 @@ namespace pricecheckingtoolapi.Migrations
                         principalColumn: "partyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PartyUser_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_PartyUser_Users_username",
+                        column: x => x.username,
                         principalTable: "Users",
-                        principalColumn: "userId",
+                        principalColumn: "username",
                         onDelete: ReferentialAction.Cascade);
                 });
 

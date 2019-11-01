@@ -9,10 +9,11 @@ namespace pricecheckingtoolapi.Models
 {
     public class User
     {
-        public string name { get; set; }
         [Key]
-        public int userId { get; set; }
+        [StringLength(35)]
+        public string username { get; set; }
         public string sessionId { get; set; }
+        public string league { get; set; }
         public List<PartyUser> partyUser { get; set; }
         
     }

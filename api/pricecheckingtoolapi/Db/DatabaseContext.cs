@@ -25,14 +25,16 @@ namespace pricecheckingtoolapi.Db
             modelBuilder.Entity<Currency>()
                 .HasKey(c => c.currencyTypeName);
 
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.username);
 
             modelBuilder.Entity<PartyUser>()
-                .HasKey(pt => new { pt.userId, pt.partyId });
+                .HasKey(pt => new { pt.username, pt.partyId });
 
             modelBuilder.Entity<PartyUser>()
                 .HasOne(pt => pt.user)
                 .WithMany(p => p.partyUser)
-                .HasForeignKey(pt => pt.userId);
+                .HasForeignKey(pt => pt.username);
 
             modelBuilder.Entity<PartyUser>()
                 .HasOne(pt => pt.party)

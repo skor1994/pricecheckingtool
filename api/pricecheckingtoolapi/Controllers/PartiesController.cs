@@ -19,13 +19,13 @@ namespace pricecheckingtoolapi.Controllers
             this.databaseContext = databaseContext;
         }
 
-        [HttpGet("getmyparties/{userId}")]
-        public IQueryable<Party> GetAllPartiesById(int userId)
+        [HttpGet("getmyparties/{username}")]
+        public IQueryable<Party> GetAllPartiesById(string username)
         {
             var myParties = (
                             from partyUser in databaseContext.PartyUser
                             join party in databaseContext.Partys on partyUser.partyId equals party.partyId
-                            where partyUser.userId == userId
+                            where partyUser.username == username
                             select new Party
                             {
                                 name = party.name,
@@ -40,12 +40,11 @@ namespace pricecheckingtoolapi.Controllers
         {
             var containeduser = (
                             from party in databaseContext.PartyUser
-                            join user in databaseContext.Users on party.userId equals user.userId
+                            join user in databaseContext.Users on party.username equals user.username
                             where party.partyId == partyId
                             select new User
                             {
-                                name = user.name,
-                                userId = user.userId
+                                username = user.username
                             });
 
             return containeduser;

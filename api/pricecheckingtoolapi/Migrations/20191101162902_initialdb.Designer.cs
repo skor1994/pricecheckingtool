@@ -8,7 +8,7 @@ using pricecheckingtoolapi.Db;
 namespace pricecheckingtoolapi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20191101155503_initialdb")]
+    [Migration("20191101162902_initialdb")]
     partial class initialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,13 +81,13 @@ namespace pricecheckingtoolapi.Migrations
 
             modelBuilder.Entity("pricecheckingtoolapi.Models.PartyUser", b =>
                 {
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
+                    b.Property<string>("username")
+                        .HasColumnType("varchar(35)");
 
                     b.Property<int>("partyId")
                         .HasColumnType("int");
 
-                    b.HasKey("userId", "partyId");
+                    b.HasKey("username", "partyId");
 
                     b.HasIndex("partyId");
 
@@ -96,17 +96,14 @@ namespace pricecheckingtoolapi.Migrations
 
             modelBuilder.Entity("pricecheckingtoolapi.Models.User", b =>
                 {
-                    b.Property<int>("userId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("name")
-                        .HasColumnType("longtext");
+                    b.Property<string>("username")
+                        .HasColumnType("varchar(35)")
+                        .HasMaxLength(35);
 
                     b.Property<string>("sessionId")
                         .HasColumnType("longtext");
 
-                    b.HasKey("userId");
+                    b.HasKey("username");
 
                     b.ToTable("Users");
                 });
@@ -121,7 +118,7 @@ namespace pricecheckingtoolapi.Migrations
 
                     b.HasOne("pricecheckingtoolapi.Models.User", "user")
                         .WithMany("partyUser")
-                        .HasForeignKey("userId")
+                        .HasForeignKey("username")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

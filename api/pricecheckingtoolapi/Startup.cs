@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using pricecheckingtoolapi.Db;
+using pricecheckingtoolapi.Providers;
 using pricecheckingtoolapi.Services;
 
 namespace pricecheckingtoolapi
@@ -33,7 +34,9 @@ namespace pricecheckingtoolapi
             var connection = "server=localhost;port=3306;database=pricecheckingtool;user=root;SslMode=none";
             services.AddDbContext<DatabaseContext>( // replace "YourDbContext" with the class name of your DbContext
                 options => options.UseMySql(connection));
-            services.AddHostedService<TimedHostedService>();
+            services.AddHttpClient();
+            services.AddSingleton<PricesProvider>();
+            services.AddSingleton<IHostedService, PricesRefreshService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

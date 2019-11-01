@@ -23,10 +23,10 @@ namespace pricecheckingtoolapi.Controllers
         [HttpPost("auth/login")]
         public IActionResult Authenticate([FromForm] User userparam)
         {
-            if (string.IsNullOrWhiteSpace(userparam.name) || string.IsNullOrWhiteSpace(userparam.sessionId))
+            if (string.IsNullOrWhiteSpace(userparam.username) || string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();
 
-            var user = databaseContext.Users.SingleOrDefault(x => x.name == userparam.name);
+            var user = databaseContext.Users.Find(userparam.username);
 
             if (user == null)
                 return NotFound();
@@ -37,25 +37,37 @@ namespace pricecheckingtoolapi.Controllers
         [HttpPost("auth/create")]
         public IActionResult Create([FromForm] User userparam)
         {            
-            if (string.IsNullOrWhiteSpace(userparam.name) ||string.IsNullOrWhiteSpace(userparam.sessionId))
+            if (string.IsNullOrWhiteSpace(userparam.username) ||string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();
 
             User user = new User();
 
-            if (databaseContext.Users.Any(x => x.name == userparam.name))
+            if (databaseContext.Users.Any(x => x.username == userparam.username))
                 return null;
 
-            user.name = userparam.name;
+            user.username = userparam.username;
             user.sessionId = userparam.sessionId;
 
             databaseContext.Users.Add(user);
             databaseContext.SaveChanges();
 
-            return Ok(new User()
-            {
-                name = user.name,
-                userId = user.userId
-            });
+            return Ok();
+        }
+
+        [HttpGet("getstashtabs/{username}")]
+        public async Task<IActionResult> GetItems(string username)
+        {
+            User user = new User();
+
+            if (string.IsNullOrWhiteSpace(username))
+                return BadRequest();
+
+            user = databaseContext.Users.Find(username);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok();
         }
     }
 }
