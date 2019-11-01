@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using pricecheckingtoolapi.Db;
 using pricecheckingtoolapi.Gateways;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,10 +16,12 @@ namespace pricecheckingtoolapi.Services
         private Timer _timer;
         private Task executeFetch;
         private HttpGateway httpGateway = new HttpGateway();
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger)
+        public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
+            _scopeFactory = scopeFactory;
         }
         
         private void ExecuteTask(object state)
@@ -34,14 +37,13 @@ namespace pricecheckingtoolapi.Services
 
         private async Task ExecuteFetch()
         {
-            List<Task> tasks = new List<Task>();
-
             _logger.LogInformation("Fetches Running.");
 
-            List<string> urls = new List<string>{ $"https://poe.ninja/api/data/itemoverview?league=Blight&type=Currency", "https://poe.ninja/api/data/currencyoverview?league=Blight&type=Fragment",
-                        "https://poe.ninja/api/data/itemoverview?league=Blight&type=Oil", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Incubator",
+            List<string> urlsCurrency = new List<string>{$"https://poe.ninja/api/data/itemoverview?league=Blight&type=Currency", "https://poe.ninja/api/data/currencyoverview?league=Blight&type=Fragment"};
+
+            List<string> urlsItems = new List<string>{$"https://poe.ninja/api/data/itemoverview?league=Blight&type=Oil", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Incubator",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=Scarab", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Fossil",
-                        "https://poe.ninja/api/data/itemoverview?league=Blight&type=Resonator", "	https://poe.ninja/api/data/itemoverview?league=Blight&type=Essence",
+                        "https://poe.ninja/api/data/itemoverview?league=Blight&type=Resonator", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Essence",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=DivinationCard", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Prophecy",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=SkillGem", "https://poe.ninja/api/data/itemoverview?league=Blight&type=BaseType",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueMap", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Map",
@@ -49,26 +51,22 @@ namespace pricecheckingtoolapi.Services
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueWeapon","	https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueArmour",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueAccessory", "	https://poe.ninja/api/data/itemoverview?league=Blight&type=Beast"
             };
-                
-            foreach (var url in urls)
+
+            using (var scope = _scopeFactory.CreateScope())
             {
-                tasks.Add(Task.Run(async () => await httpGateway.Get(url)));
+                var databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+
+                foreach (var url in urlsCurrency)
+                {
+                    await Task.Run(async () => await httpGateway.GetCurrenies(url, databaseContext));
+                }
+                foreach (var url in urlsItems)
+                {
+                    await Task.Run(async () => await httpGateway.GetItems(url, databaseContext));
+                }
             }
 
-            Task task = Task.WhenAll(tasks);
-            
-            try
-            {
-                await task;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                _logger.LogInformation("Fetches Done.");
-            }
+            _logger.LogInformation("Fetches Done.");
         }
 
         public void Dispose()

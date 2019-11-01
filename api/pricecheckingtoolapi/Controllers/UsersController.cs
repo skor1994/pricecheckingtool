@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using pricecheckingtoolapi.Db;
 using pricecheckingtoolapi.Models;
-using pricecheckingtoolapi.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace pricecheckingtoolapi.Controllers
         }
         
         [HttpPost("auth/login")]
-        public IActionResult Authenticate([FromForm] UserDto userparam)
+        public IActionResult Authenticate([FromForm] User userparam)
         {
             if (string.IsNullOrWhiteSpace(userparam.name) || string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();
@@ -36,7 +35,7 @@ namespace pricecheckingtoolapi.Controllers
         }
 
         [HttpPost("auth/create")]
-        public IActionResult Create([FromForm] UserDto userparam)
+        public IActionResult Create([FromForm] User userparam)
         {            
             if (string.IsNullOrWhiteSpace(userparam.name) ||string.IsNullOrWhiteSpace(userparam.sessionId))
                 return BadRequest();

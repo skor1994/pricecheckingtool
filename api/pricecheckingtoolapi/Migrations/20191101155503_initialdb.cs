@@ -3,10 +3,41 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace pricecheckingtoolapi.Migrations
 {
-    public partial class init : Migration
+    public partial class initialdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    currencyTypeName = table.Column<string>(maxLength: 35, nullable: false),
+                    chaosEquivalent = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.currencyTypeName);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(nullable: true),
+                    icon = table.Column<string>(nullable: true),
+                    links = table.Column<int>(nullable: false),
+                    baseType = table.Column<string>(nullable: true),
+                    chaosValue = table.Column<double>(nullable: false),
+                    exaltedValue = table.Column<double>(nullable: false),
+                    mapTier = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Partys",
                 columns: table => new
@@ -26,7 +57,8 @@ namespace pricecheckingtoolapi.Migrations
                 {
                     userId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(nullable: true)
+                    name = table.Column<string>(nullable: true),
+                    sessionId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,6 +97,12 @@ namespace pricecheckingtoolapi.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Currencies");
+
+            migrationBuilder.DropTable(
+                name: "Items");
+
             migrationBuilder.DropTable(
                 name: "PartyUser");
 

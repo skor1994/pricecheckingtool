@@ -18,9 +18,14 @@ namespace pricecheckingtoolapi.Db
         public DbSet<Party> Partys { get; set; }
         public DbSet<PartyUser> PartyUser { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Currency>()
+                .HasKey(c => c.currencyTypeName);
+
+
             modelBuilder.Entity<PartyUser>()
                 .HasKey(pt => new { pt.userId, pt.partyId });
 

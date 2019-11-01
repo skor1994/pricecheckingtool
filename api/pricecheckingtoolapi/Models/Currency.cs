@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace pricecheckingtoolapi.Models
 {
-    public class User
+    public class Currency
     {
-        public string name { get; set; }
         [Key]
-        public int userId { get; set; }
-        public string sessionId { get; set; }
-        public List<PartyUser> partyUser { get; set; }
-        
+        [StringLength(35)]
+        public string currencyTypeName { get; set; }
+        public double chaosEquivalent { get; set; }
     }
 }
