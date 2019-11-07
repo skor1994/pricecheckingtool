@@ -5,6 +5,7 @@ using pricecheckingtoolapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,10 @@ namespace pricecheckingtoolapi.Providers
 {
     public class PricesProvider
     {
+        //"https://poe.ninja/api/data/itemoverview?league=Blight&type=SkillGem", 
+
         private readonly HttpClient _httpClient;
+
         private readonly List<string> urlsItems = new List<string>{$"https://poe.ninja/api/data/itemoverview?league=Blight&type=Oil", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Incubator",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=Scarab", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Fossil",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=Resonator", "https://poe.ninja/api/data/itemoverview?league=Blight&type=Essence",
@@ -21,7 +25,7 @@ namespace pricecheckingtoolapi.Providers
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueJewel", "	https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueFlask",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueWeapon","	https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueArmour",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueAccessory","https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueMap",
-                        "https://poe.ninja/api/data/itemoverview?league=Blight&type=SkillGem", "https://poe.ninja/api/data/itemoverview?league=Blight&type=BaseType",
+                        "https://poe.ninja/api/data/itemoverview?league=Blight&type=BaseType",
                         "https://poe.ninja/api/data/itemoverview?league=Blight&type=Map","https://poe.ninja/api/data/itemoverview?league=Blight&type=Beast"
 
         };
@@ -30,6 +34,35 @@ namespace pricecheckingtoolapi.Providers
         public PricesProvider(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
+        }
+        public async Task<string> FetchStashTabsData(User user)
+        {
+            Cookie cookie = new Cookie
+            {
+                Value = user.sessionId,
+                Name = "POESESSID",
+                Domain = "pathofexile.com",
+                Secure = false,
+                Path = "/",
+                HttpOnly = false
+            };
+            CookieContainer cookieContainer = new CookieContainer();
+            cookieContainer.Add(cookie);
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            httpClientHandler.CookieContainer = cookieContainer;
+            HttpClient httpClient = new HttpClient(httpClientHandler);
+
+            string link = $"https://www.pathofexile.com/character-window/get-stash-items/?league=Blight&accountName=SkorPoE&tabs=1";
+            try
+            {
+                HttpResponseMessage response = await httpClient.GetAsync(link);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task ExecuteFetch(DatabaseContext databaseContext, CancellationToken cancellationToken)
@@ -118,6 +151,7 @@ namespace pricecheckingtoolapi.Providers
             finally
             {
                 objects.lines.ForEach(n => databaseContext.Items.Update(n));
+
                 var saved = false;
                 while (!saved)
                 {

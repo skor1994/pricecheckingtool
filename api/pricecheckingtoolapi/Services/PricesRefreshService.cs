@@ -26,16 +26,17 @@ namespace pricecheckingtoolapi.Services
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                _logger.LogInformation("Task awake, starting fetches");
+
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    DatabaseContext databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-
-                    _logger.LogInformation("Starting Fetches");
+                    DatabaseContext databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();                  
                     await _pricesProvider.ExecuteFetch(databaseContext, cancellationToken);
-                    _logger.LogInformation("Fetches Done, Task asleep");
-                    await Task.Delay(TimeSpan.FromSeconds(30), cancellationToken);
-                    _logger.LogInformation("Task awake");
                 }
+
+                _logger.LogInformation("Fetches Done, Task asleep");
+                await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
+                
             }
         }
     }

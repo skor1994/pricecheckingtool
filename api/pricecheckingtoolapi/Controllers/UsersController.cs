@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using pricecheckingtoolapi.Db;
 using pricecheckingtoolapi.Models;
+using pricecheckingtoolapi.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,11 @@ namespace pricecheckingtoolapi.Controllers
     public class UsersController: ControllerBase
     {
         private readonly DatabaseContext databaseContext;
-        public UsersController(DatabaseContext databaseContext)
+        private readonly PricesProvider _pricesProvider; 
+        public UsersController(DatabaseContext databaseContext, PricesProvider pricesProvider)
         {
             this.databaseContext = databaseContext;
+            _pricesProvider = pricesProvider;
         }
         
         [HttpPost("auth/login")]
@@ -57,17 +60,17 @@ namespace pricecheckingtoolapi.Controllers
         [HttpGet("getstashtabs/{username}")]
         public async Task<IActionResult> GetItems(string username)
         {
-            User user = new User();
+            var user = new User();
 
             if (string.IsNullOrWhiteSpace(username))
                 return BadRequest();
-
+            
             user = databaseContext.Users.Find(username);
 
             if (user == null)
                 return NotFound();
-
-            return Ok();
+            
+            return Ok(await _pricesProvider.FetchStashTabsData(user));
         }
     }
 }
